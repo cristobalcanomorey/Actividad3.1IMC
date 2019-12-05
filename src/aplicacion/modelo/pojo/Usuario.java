@@ -1,4 +1,4 @@
-package aplicaccion.modelo.pojo;
+package aplicacion.modelo.pojo;
 
 import java.util.ArrayList;
 import java.util.Date;
