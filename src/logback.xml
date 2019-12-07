@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+   
+ <appender name="ERRORFILE" class="ch.qos.logback.core.FileAppender">
+      <file> AppIMC.txt </file>
+      <append>true</append>
+      <encoder>
+         <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+      </encoder>
+   </appender>
+   
+   <logger name="aplicacion.controlador.Principal" level="ERROR" additivity="false">
+    <appender-ref ref="ERRORFILE" />
+  </logger>
+   
+   <logger name="aplicacion.modelo.dao.CalculoDAO" level="ERROR" additivity="false">
+    <appender-ref ref="ERRORFILE" />
+  </logger>
+  
+   <logger name="aplicacion.modelo.dao.UsuarioDAO" level="ERROR" additivity="false">
+    <appender-ref ref="ERRORFILE" />
+  </logger>
+  
+   <logger name="aplicacion.modelo.ejb.SesionesEJB" level="ERROR" additivity="false">
+    <appender-ref ref="ERRORFILE" />
+  </logger>
+  
+   <logger name="aplicacion.vista.PaginaPrincipal" level="ERROR" additivity="false">
+    <appender-ref ref="ERRORFILE" />
+  </logger>  
+</configuration>
