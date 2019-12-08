@@ -16,7 +16,7 @@ public class PaginaPrincipal {
 	private Cuerpo cuerpo;
 
 	@SuppressWarnings("unused")
-	public PaginaPrincipal(Usuario usu, String altura, String peso, String resul) {
+	public PaginaPrincipal(Usuario usu, String resul) {
 		this.pagina = new Html("Principal", "css/style.css", "js/script.js");
 		this.header = new Header(usu.getNombre(), usu.getFoto());
 		if (usu != null) {
@@ -29,13 +29,16 @@ public class PaginaPrincipal {
 		this.header.addAPagina(this.pagina);
 		pagina.addABody(new Tag("h1", "Calcular IMC", true, true));
 		Formulario form = crearFormCalc();
-		Tag resultado = new Tag("p", resul, true, true);
+		Tag resultado = null;
+		if (resul != null) {
+			resultado = new Tag("p", resul, true, true);
+		}
 		this.cuerpo = new Cuerpo(form, null, resultado);
 		this.cuerpo.addAPagina(this.pagina);
 	}
 
 	private Formulario crearFormCalc() {
-		Formulario form = new Formulario("GET", "Principal");
+		Formulario form = new Formulario("POST", "Principal");
 		form.addItem(new Tag("p", "Peso", true, true));
 		Tag peso = new Tag("input", null, false, false);
 		peso.prepararAtributos();

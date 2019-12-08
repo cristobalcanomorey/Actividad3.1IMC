@@ -30,8 +30,4 @@
    <logger name="aplicacion.modelo.ejb.SesionesEJB" level="ERROR" additivity="false">
     <appender-ref ref="ERRORFILE" />
   </logger>
-  
-   <logger name="aplicacion.vista.PaginaPrincipal" level="ERROR" additivity="false">
-    <appender-ref ref="ERRORFILE" />
-  </logger>  
 </configuration>
