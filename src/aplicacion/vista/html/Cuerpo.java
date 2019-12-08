@@ -30,7 +30,9 @@ public class Cuerpo {
 		if (this.historial != null) {
 			pagina = this.historial.addAPagina(pagina);
 		}
-		pagina.addABody(this.resultado);
+		if (this.resultado != null) {
+			pagina.addABody(this.resultado);
+		}
 		return pagina;
 	}
 }
