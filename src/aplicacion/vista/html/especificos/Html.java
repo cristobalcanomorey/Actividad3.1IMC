@@ -1,4 +1,4 @@
-package aplicacion.vista.html;
+package aplicacion.vista.html.especificos;
 
 import java.util.ArrayList;
 
@@ -8,6 +8,13 @@ public class Html {
 	private ArrayList<Tag> contenidoHead = new ArrayList<Tag>();
 	private ArrayList<Tag> contenidoBody = new ArrayList<Tag>();
 
+	/***
+	 * Constructor html, añade tags en contenidoHead
+	 * 
+	 * @param titulo     Título de la página
+	 * @param rutaCss    Ruta al archivo css
+	 * @param rutaScript Ruta al archivo javascript
+	 */
 	public Html(String titulo, String rutaCss, String rutaScript) {
 		Tag doctype = new Tag("!DOCTYPE", null, false, false);
 		doctype.prepararAtributos();
@@ -55,20 +62,26 @@ public class Html {
 		}
 	}
 
+	/***
+	 * Construye el Tag html añadiendo sus hijos y los devuelve como string
+	 */
 	@Override
 	public String toString() {
 		String s = this.doctype.toString();
-		Tag html = new Tag("html", "", true, true);
-		Tag head = new Tag("head", "", true, true);
+		Tag html = new Tag("html", null, true, true);
+		Tag head = new Tag("head", null, true, true);
+		html.prepararHijos();
+		head.prepararHijos();
 		for (Tag tag : contenidoHead) {
-			head.addContenido(tag);
+			head.addChild(tag);
 		}
-		Tag body = new Tag("body", "", true, true);
+		Tag body = new Tag("body", null, true, true);
+		body.prepararHijos();
 		for (Tag tag : contenidoBody) {
-			body.addContenido(tag);
+			body.addChild(tag);
 		}
-		html.addContenido(head);
-		html.addContenido(body);
+		html.addChild(head);
+		html.addChild(body);
 		s += html.toString();
 		return s;
 	}

@@ -1,4 +1,4 @@
-package aplicacion.vista.html;
+package aplicacion.vista.html.especificos;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,16 +6,20 @@ import java.util.HashMap;
 public class Tag {
 
 	private String tag;
-	private String contenido;
-	private ArrayList<Tag> hijos;
-	private HashMap<String, String> atributos;
+	private ArrayList<Tag> hijos = null;
+	private HashMap<String, String> atributos = null;
 	private boolean cierraEtiqueta;
 	private boolean etiquetaCierre;
 	private boolean nodoTexto = false;
+	private String contenido;
 
 	public Tag(String tag, String contenido, boolean cierraEtiqueta, boolean etiquetaCierre) {
 		this.tag = tag;
-		this.contenido = contenido;
+		if (contenido != null) {
+			this.prepararHijos();
+			Tag tNodo = new Tag(contenido);
+			this.hijos.add(tNodo);
+		}
 		this.atributos = null;
 		this.cierraEtiqueta = cierraEtiqueta;
 		this.etiquetaCierre = etiquetaCierre;
@@ -35,26 +39,41 @@ public class Tag {
 		this.atributos = new HashMap<String, String>();
 	}
 
-	public void prepararHijos() {
-		this.hijos = new ArrayList<Tag>();
-	}
-
 	public void addAtributo(String atributo, String valor) {
-		if (this.atributos != null)
+		if (this.atributos != null) {
 			if (valor != null) {
 				this.atributos.put(atributo, valor);
 			} else {
 				this.atributos.put(atributo, "");
 			}
+		}
+	}
+
+	public void prepararHijos() {
+		this.hijos = new ArrayList<Tag>();
 	}
 
 	public void addChild(Tag hijo) {
-		if (this.hijos != null)
+		if (this.hijos != null) {
 			this.hijos.add(hijo);
+		}
 	}
 
 	public void addContenido(String texto) {
 		this.contenido += texto;
+	}
+
+	/***
+	 * Rodea el tag contenido en un list item
+	 * 
+	 * @param contenido Tag contenido
+	 * @return Tag li con el contenido
+	 */
+	public static Tag incrustarEn(Tag contenido, String tag) {
+		Tag t = new Tag(tag, null, true, true);
+		t.prepararHijos();
+		t.addChild(contenido);
+		return t;
 	}
 
 	@Override
