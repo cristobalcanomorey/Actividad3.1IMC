@@ -21,6 +21,14 @@ CREATE TABLE IF NOT EXISTS usuario (
     fechaRegistro DATETIME NOT NULL
 )  ENGINE=INNODB charset=utf8;
 
+CREATE TABLE IF NOT EXISTS altas_bajas(
+	id INT(11) auto_increment primary key,
+    correo VARCHAR(100) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    tipoAccion CHAR(1) NOT NULL,
+    fecha DATETIME NOT NULL
+)  ENGINE=INNODB charset=utf8;
+
 CREATE TABLE IF NOT EXISTS validacion (
 	codigo VARCHAR(100) NOT NULL PRIMARY KEY,
     idUsuario INT(11) NOT NULL,
@@ -41,6 +49,25 @@ CREATE TABLE IF NOT EXISTS calculo (
     	on delete cascade
     	on update cascade
 )  ENGINE=INNODB;
+
+#Trigger para insertar altas de usuarios en altas_bajas
+DELIMITER $$
+CREATE TRIGGER altas AFTER INSERT ON usuario
+FOR EACH ROW
+begin
+	INSERT INTO altas_bajas (correo,nombre,tipoAccion,fecha)
+    VALUES (new.correo, new.nombre, 'A', new.fechaRegistro);
+end$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER bajas BEFORE DELETE ON usuario
+FOR EACH ROW
+begin
+	INSERT INTO altas_bajas (correo,nombre,tipoAccion,fecha)
+    VALUES (old.correo, old.nombre, 'B', old.fechaRegistro);
+end$$
+DELIMITER ;
 
 INSERT INTO usuario (correo,nombre,password,foto,validado,fechaRegistro)
 values ('tofol@gmail.com','tofol','passwordtofol','rutafototofol',false,'2019-12-06 17:20:00');

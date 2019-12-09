@@ -17,7 +17,6 @@ public class LogSingleton {
 	 * Constructor privado
 	 */
 	private LogSingleton() {
-
 	}
 
 	/**
