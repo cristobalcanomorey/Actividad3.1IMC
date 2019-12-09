@@ -41,7 +41,7 @@ public class JDBCSingleton {
 	 * 
 	 * @return
 	 */
-	public static Connection getConnection() {
+	public Connection getConnection() {
 		return conn;
 	}
 
@@ -54,8 +54,7 @@ public class JDBCSingleton {
 	 * @throws SQLException
 	 * @throws NamingException
 	 */
-	public static void setConnection(String initC, String envC)
-			throws ClassNotFoundException, SQLException, NamingException {
+	public void setConnection(String initC, String envC) throws ClassNotFoundException, SQLException, NamingException {
 		initContext = new InitialContext();
 		Context envContext = (Context) initContext.lookup(initC);
 		DataSource ds = (DataSource) envContext.lookup(envC);
@@ -68,7 +67,7 @@ public class JDBCSingleton {
 	 * 
 	 * @return Statement
 	 */
-	public static Statement getStatement() {
+	public Statement getStatement() {
 		return stmt;
 	}
 
@@ -77,7 +76,7 @@ public class JDBCSingleton {
 	 * 
 	 * @throws SQLException
 	 */
-	public static void setStatement() throws SQLException {
+	public void setStatement() throws SQLException {
 		JDBCSingleton.stmt = conn.createStatement();
 	}
 
