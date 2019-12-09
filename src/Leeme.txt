@@ -4,5 +4,5 @@ Al context.xml del vostre tomEE heu d'afegir
 type="javax.sql.DataSource" maxActive="100" maxIdle="30"
 maxWait="10000" username="tofol" password="password"
 driverClassName="com.mysql.cj.jdbc.Driver"
-url="jdbc:mysql://localhost:3306/ActividadIMC?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />
+url="jdbc:mysql://localhost:3306/ActividadIMC?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;useSSL=false" />
 	 

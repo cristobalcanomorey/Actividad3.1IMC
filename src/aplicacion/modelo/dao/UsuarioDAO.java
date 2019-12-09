@@ -7,8 +7,8 @@ import javax.naming.NamingException;
 
 import org.slf4j.Logger;
 
-import aplicacion.controlador.JDBCSingleton;
-import aplicacion.controlador.LogSingleton;
+import aplicacion.modelo.JDBCSingleton;
+import aplicacion.modelo.LogSingleton;
 import aplicacion.modelo.pojo.Usuario;
 
 public class UsuarioDAO {

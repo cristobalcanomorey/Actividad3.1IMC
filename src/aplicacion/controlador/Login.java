@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import aplicacion.modelo.LogSingleton;
 import aplicacion.modelo.ejb.SesionesEJB;
 import aplicacion.modelo.ejb.UsuariosEJB;
 import aplicacion.modelo.pojo.Usuario;
@@ -29,6 +30,15 @@ public class Login extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		LogSingleton log = LogSingleton.getInstance();
 		String error = request.getParameter("error");
+		String err1 = "El correo o la contraseña no son correctos";
+		String err2 = "Esta cuenta aún no ha sido validada";
+		if (error != null) {
+			if (error.equals("1")) {
+				error = err1;
+			} else if (error.equals("2")) {
+				error = err2;
+			}
+		}
 
 		Usuario usuario = sesionesEJB.usuarioLogeado(session);
 
@@ -71,7 +81,7 @@ public class Login extends HttpServlet {
 			Usuario usuario = usuariosEJB.existeUsuario(correo, paswd);
 			if (usuario == null) {
 				try {
-					response.sendRedirect("Login?error=El correo o la contraseña no son correctos");
+					response.sendRedirect("Login?error=1");
 				} catch (IOException e) {
 					log.getLoggerLogin().error("Se ha producido un error en POST Login: ", e);
 				}
@@ -87,7 +97,7 @@ public class Login extends HttpServlet {
 					}
 				} else {
 					try {
-						response.sendRedirect("Login?error=Esta cuenta no ha sido validada");
+						response.sendRedirect("Login?error=2");
 					} catch (IOException e) {
 						log.getLoggerLogin().error("Se ha producido un error en POST Login: ", e);
 					}

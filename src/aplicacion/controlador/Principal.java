@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import aplicacion.modelo.LogSingleton;
 import aplicacion.modelo.ejb.CalculosEJB;
 import aplicacion.modelo.ejb.SesionesEJB;
 import aplicacion.modelo.pojo.Calculo;
@@ -51,7 +52,7 @@ public class Principal extends HttpServlet {
 		Usuario usuario = sesionesEJB.usuarioLogeado(session);
 		Calculo calculo = calculosEJB.calcula(peso, altura);
 		response.setContentType("text/html; charset=UTF-8");
-		PaginaPrincipal paginaPrincipal = new PaginaPrincipal(usuario, calculo.getImc().toString());
+		PaginaPrincipal paginaPrincipal = new PaginaPrincipal(usuario, String.format("%.2f", calculo.getImc()));
 		try {
 			paginaPrincipal.print(response.getWriter());
 		} catch (IOException e) {

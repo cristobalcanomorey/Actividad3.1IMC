@@ -1,8 +1,10 @@
-package aplicacion.controlador;
+package aplicacion.modelo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import aplicacion.controlador.Login;
+import aplicacion.controlador.Principal;
 import aplicacion.modelo.dao.UsuarioDAO;
 
 public class LogSingleton {
@@ -19,7 +21,7 @@ public class LogSingleton {
 	}
 
 	/**
-	 * Obtener la conexión
+	 * Obtener instancia
 	 * 
 	 * @return
 	 */

@@ -44,12 +44,14 @@ public class PaginaPrincipal {
 		peso.prepararAtributos();
 		peso.addAtributo("type", "number");
 		peso.addAtributo("name", "peso");
+		peso.addAtributo("step", "0.01");
 		form.addItem(peso);
 		form.addItem(new Tag("p", "Altura", true, true));
 		Tag altura = new Tag("input", null, false, false);
 		altura.prepararAtributos();
 		altura.addAtributo("type", "number");
 		altura.addAtributo("name", "altura");
+		altura.addAtributo("step", "0.01");
 		form.addItem(altura);
 		Tag enviar = new Tag("input", null, false, false);
 		enviar.prepararAtributos();
