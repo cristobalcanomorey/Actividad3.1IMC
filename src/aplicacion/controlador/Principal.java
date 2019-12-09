@@ -30,6 +30,7 @@ public class Principal extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession(false);
 		LogSingleton log = LogSingleton.getInstance();
+		String historial = request.getParameter("historial");
 
 		Usuario usuario = sesionesEJB.usuarioLogeado(session);
 

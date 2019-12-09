@@ -1,12 +1,14 @@
 package aplicacion.vista;
 
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 
 import aplicacion.modelo.pojo.Usuario;
 import aplicacion.vista.html.Cuerpo;
 import aplicacion.vista.html.Header;
 import aplicacion.vista.html.especificos.Formulario;
 import aplicacion.vista.html.especificos.Html;
+import aplicacion.vista.html.especificos.Tabla;
 import aplicacion.vista.html.especificos.Tag;
 
 public class PaginaPrincipal {
@@ -15,11 +17,12 @@ public class PaginaPrincipal {
 	private Header header;
 	private Cuerpo cuerpo;
 
-	public PaginaPrincipal(Usuario usu, String resul) {
+	public PaginaPrincipal(Usuario usu, ResultSet historial, String resul) {
 		this.pagina = new Html("Principal", "css/style.css", "js/script.js");
 		if (usu != null) {
 			this.header = new Header(usu.getNombre(), usu.getFoto());
 			this.header.addLogout();
+			this.header.addHistorial();
 			this.header.addDarseDeBaja();
 		} else {
 			this.header = new Header(null, null);
@@ -33,7 +36,11 @@ public class PaginaPrincipal {
 		if (resul != null) {
 			resultado = new Tag("p", resul, true, true);
 		}
-		this.cuerpo = new Cuerpo(form, null, resultado);
+		Tabla tabla = null;
+		if (historial != null) {
+
+		}
+		this.cuerpo = new Cuerpo(form, tabla, resultado);
 		this.cuerpo.addAPagina(this.pagina);
 	}
 

@@ -12,6 +12,7 @@ public class Header {
 	private Tag darseDeBaja = null;
 	private Tag login = null;
 	private Tag registro = null;
+	private Tag historial = null;
 
 	public Header(String nombreUsuario, String rutaFotoPerfil) {
 		if (nombreUsuario != null) {
@@ -52,6 +53,12 @@ public class Header {
 		this.darseDeBaja.addAtributo("href", "Baja");
 	}
 
+	public void addHistorial() {
+		this.historial = new Tag("a", "Historial", true, true);
+		this.historial.prepararAtributos();
+		this.historial.addAtributo("href", "Principal?historial=si");
+	}
+
 	public Html addAPagina(Html pagina) {
 		Tag navBar = new Tag("ul", null, true, true);
 		navBar.prepararAtributos();
@@ -65,6 +72,9 @@ public class Header {
 			}
 			if (this.logout != null) {
 				navBar.addChild(Tag.incrustarEn(this.logout, "li"));
+			}
+			if (this.historial != null) {
+				navBar.addChild(Tag.incrustarEn(this.historial, "li"));
 			}
 			if (this.darseDeBaja != null) {
 				navBar.addChild(Tag.incrustarEn(this.darseDeBaja, "li"));
