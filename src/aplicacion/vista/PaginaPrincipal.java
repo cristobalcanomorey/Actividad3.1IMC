@@ -15,14 +15,14 @@ public class PaginaPrincipal {
 	private Header header;
 	private Cuerpo cuerpo;
 
-	@SuppressWarnings("unused")
 	public PaginaPrincipal(Usuario usu, String resul) {
 		this.pagina = new Html("Principal", "css/style.css", "js/script.js");
-		this.header = new Header(usu.getNombre(), usu.getFoto());
 		if (usu != null) {
+			this.header = new Header(usu.getNombre(), usu.getFoto());
 			this.header.addLogout();
 			this.header.addDarseDeBaja();
 		} else {
+			this.header = new Header(null, null);
 			this.header.addRegistro();
 			this.header.addLogin();
 		}

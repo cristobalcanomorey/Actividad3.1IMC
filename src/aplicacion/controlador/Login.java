@@ -85,6 +85,12 @@ public class Login extends HttpServlet {
 					} catch (IOException e) {
 						log.getLoggerLogin().error("Se ha producido un error en POST Login: ", e);
 					}
+				} else {
+					try {
+						response.sendRedirect("Login?error=Esta cuenta no ha sido validada");
+					} catch (IOException e) {
+						log.getLoggerLogin().error("Se ha producido un error en POST Login: ", e);
+					}
 				}
 			}
 		}
