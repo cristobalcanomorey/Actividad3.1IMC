@@ -49,4 +49,16 @@ public class Usuario {
 		return this.id;
 	}
 
+	public Date getFechaRegistro() {
+		return fechaRegistro;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
 }

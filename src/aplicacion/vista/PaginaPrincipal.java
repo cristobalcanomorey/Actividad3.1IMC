@@ -45,14 +45,14 @@ public class PaginaPrincipal {
 	private Tabla crearTablaHistorial(Usuario u) {
 		Tabla tabla = null;
 		if (u != null) {
-			tabla = new Tabla();
-			tabla.addAFila(new Tag("Estatura"), "th");
-			tabla.addAFila(new Tag("Peso"), "th");
-			tabla.addAFila(new Tag("Fecha"), "th");
-			tabla.addAFila(new Tag("IMC"), "th");
-			tabla.addFilaAEncabezado();
-			tabla.resetFila();
 			if (u.getCalculos() != null) {
+				tabla = new Tabla();
+				tabla.addAFila(new Tag("Estatura"), "th");
+				tabla.addAFila(new Tag("Peso"), "th");
+				tabla.addAFila(new Tag("Fecha"), "th");
+				tabla.addAFila(new Tag("IMC"), "th");
+				tabla.addFilaAEncabezado();
+				tabla.resetFila();
 				for (Calculo c : u.getCalculos()) {
 					tabla.addAFila(new Tag(c.getEstatura().toString()), "td");
 					tabla.addAFila(new Tag(c.getPeso().toString()), "td");

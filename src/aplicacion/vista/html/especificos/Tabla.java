@@ -47,6 +47,7 @@ public class Tabla {
 			this.thead.addChild(tr);
 		}
 		this.tbody.prepararHijos();
+		prepararCuerpo();
 		for (ArrayList<Tag> arrayList : cuerpo) {
 			Tag tr = new Tag("tr", null, true, true);
 			tr.prepararHijos();

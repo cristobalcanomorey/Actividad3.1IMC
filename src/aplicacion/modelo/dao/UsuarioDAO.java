@@ -32,6 +32,7 @@ public class UsuarioDAO {
 				CON.setConnection("java:/comp/env", "jdbc/ActividadIMC");
 				if (CON.getConnection() != null) {
 					CON.setStatement();
+					// tira excepción
 					ResultSet rs = CON.getStatement().executeQuery(query);
 					rs.last();
 					if (rs.getRow() > 0) {
