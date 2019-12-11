@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS ActividadIMC;
 
 use ActividadIMC;
 
-SET GLOBAL validate_password_policy = 0;
+#SET GLOBAL validate_password_policy = 0;
 
 DROP USER IF EXISTS 'tofol'@'localhost';
 DROP USER IF EXISTS 'tofol'@'%';
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS usuario (
 	password VARCHAR(100) NOT NULL,
 	foto VARCHAR(255),
     validado BOOLEAN NOT NULL,
-    fechaRegistro DATETIME NOT NULL
+    fechaRegistro DATE NOT NULL
 )  ENGINE=INNODB charset=utf8;
 
 CREATE TABLE IF NOT EXISTS altas_bajas(
@@ -71,19 +71,19 @@ end$$
 DELIMITER ;
 
 INSERT INTO usuario (correo,nombre,password,foto,validado,fechaRegistro)
-values ('tofol@gmail.com','tofol','passwordtofol','rutafototofol',false,'2019-12-06 17:20:00');
+values ('tofol@gmail.com','tofol','passwordtofol','rutafototofol',false,'2019-12-06');
 
 INSERT INTO usuario (correo,nombre,password,foto,validado,fechaRegistro)
-values ('pep@gmail.com','pep','passwordpep','rutafotopep',true,'2019-12-07 17:20:00');
+values ('pep@gmail.com','pep','passwordpep','rutafotopep',true,'2019-12-07');
 
 INSERT INTO usuario (correo,nombre,password,foto,validado,fechaRegistro)
-values ('pip@gmail.com','pip','passwordpip','rutafotopip',true,'2019-12-08 17:20:00');
+values ('pip@gmail.com','pip','passwordpip','rutafotopip',true,'2019-12-08');
 
 INSERT INTO usuario (correo,nombre,password,foto,validado,fechaRegistro)
-values ('pop@gmail.com','pop','passwordpop','rutafotopop',false,'2019-12-09 17:20:00');
+values ('pop@gmail.com','pop','passwordpop','rutafotopop',false,'2019-12-09');
 
 INSERT INTO usuario (correo,nombre,password,foto,validado,fechaRegistro)
-values ('pup@gmail.com','pup','passwordpup','rutafotopup',true,'2019-12-10 17:20:00');
+values ('pup@gmail.com','pup','passwordpup','rutafotopup',true,'2019-12-10');
 
 INSERT INTO validacion (codigo,idUsuario)
 values ('algkkjadkfajfajsdnrriusfksd',1);
@@ -92,25 +92,25 @@ INSERT INTO validacion (codigo,idUsuario)
 values ('pydfhrybcnweuqysaixjhfdsuhy',4);
 
 INSERT INTO calculo (estatura,peso,fecha,idUsuario)
-values (1.90,80.7,'2019-12-06 18:14:00',1);
+values (1.90,80.7,'2018-12-06 18:14:00',1);
 
 INSERT INTO calculo (estatura,peso,fecha,idUsuario)
-values (1.90,81,'2019-12-07 18:16:00',1);
+values (1.90,81,'2018-12-07 18:16:00',1);
 
 INSERT INTO calculo (estatura,peso,fecha,idUsuario)
-values (1.90,86,'2019-12-10 20:00:00',1);
+values (1.90,86,'2018-12-10 20:00:00',1);
 
 INSERT INTO calculo (estatura,peso,fecha,idUsuario)
-values (1.90,100.4,'2020-01-01 00:00:14',1);
+values (1.90,100.4,'2019-01-01 00:00:14',1);
 
 INSERT INTO calculo (estatura,peso,fecha,idUsuario)
-values (1.90,101,'2019-12-06 18:14:00',2);
+values (1.90,101,'2018-12-06 18:14:00',2);
 
 INSERT INTO calculo (estatura,peso,fecha,idUsuario)
-values (1.90,100,'2019-12-06 20:00:00',2);
+values (1.90,100,'2018-12-06 20:00:00',2);
 
 INSERT INTO calculo (estatura,peso,fecha,idUsuario)
-values (1.90,98,'2019-12-07 04:30:00',2);
+values (1.90,98,'2018-12-07 04:30:00',2);
 
 INSERT INTO calculo (estatura,peso,fecha,idUsuario)
-values (1.79,68,'2020-01-01 00:00:07',2);
+values (1.79,68,'2019-01-01 00:00:07',2);

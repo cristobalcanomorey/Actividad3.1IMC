@@ -2,6 +2,7 @@ package aplicacion.vista;
 
 import java.io.PrintWriter;
 
+import aplicacion.modelo.pojo.Calculo;
 import aplicacion.modelo.pojo.Usuario;
 import aplicacion.vista.html.Cuerpo;
 import aplicacion.vista.html.Header;
@@ -35,12 +36,35 @@ public class PaginaPrincipal {
 		if (resul != null) {
 			resultado = new Tag("p", resul, true, true);
 		}
-		Tabla tabla = null;
-		if (usu.getCalculos() != null) {
+		Tabla tabla = crearTablaHistorial(usu);
 
-		}
 		this.cuerpo = new Cuerpo(form, tabla, resultado);
 		this.cuerpo.addAPagina(this.pagina);
+	}
+
+	private Tabla crearTablaHistorial(Usuario u) {
+		Tabla tabla = null;
+		if (u != null) {
+			tabla = new Tabla();
+			tabla.addAFila(new Tag("Estatura"), "th");
+			tabla.addAFila(new Tag("Peso"), "th");
+			tabla.addAFila(new Tag("Fecha"), "th");
+			tabla.addAFila(new Tag("IMC"), "th");
+			tabla.addFilaAEncabezado();
+			tabla.resetFila();
+			if (u.getCalculos() != null) {
+				for (Calculo c : u.getCalculos()) {
+					tabla.addAFila(new Tag(c.getEstatura().toString()), "td");
+					tabla.addAFila(new Tag(c.getPeso().toString()), "td");
+					tabla.addAFila(new Tag(c.getFecha().toString()), "td");
+					tabla.addAFila(new Tag(c.getImc().toString()), "td");
+					tabla.prepararCuerpo();
+					tabla.addFilaACuerpo();
+					tabla.resetFila();
+				}
+			}
+		}
+		return tabla;
 	}
 
 	private Formulario crearFormCalc() {
