@@ -1,7 +1,6 @@
 package aplicacion.vista;
 
 import java.io.PrintWriter;
-import java.sql.ResultSet;
 
 import aplicacion.modelo.pojo.Usuario;
 import aplicacion.vista.html.Cuerpo;
@@ -17,7 +16,7 @@ public class PaginaPrincipal {
 	private Header header;
 	private Cuerpo cuerpo;
 
-	public PaginaPrincipal(Usuario usu, ResultSet historial, String resul) {
+	public PaginaPrincipal(Usuario usu, String resul) {
 		this.pagina = new Html("Principal", "css/style.css", "js/script.js");
 		if (usu != null) {
 			this.header = new Header(usu.getNombre(), usu.getFoto());
@@ -37,7 +36,7 @@ public class PaginaPrincipal {
 			resultado = new Tag("p", resul, true, true);
 		}
 		Tabla tabla = null;
-		if (historial != null) {
+		if (usu.getCalculos() != null) {
 
 		}
 		this.cuerpo = new Cuerpo(form, tabla, resultado);

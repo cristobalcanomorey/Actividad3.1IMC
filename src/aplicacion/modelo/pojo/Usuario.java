@@ -12,7 +12,7 @@ public class Usuario {
 	private String foto;
 	private boolean validado;
 	private Date fechaRegistro;
-	private ArrayList<Calculo> calculos;
+	private ArrayList<Calculo> calculos = null;
 
 	public Usuario(Integer id, String correo, String nombre, String password, String foto, boolean validado,
 			Date fechaRegistro) {
@@ -29,6 +29,10 @@ public class Usuario {
 		this.calculos = calculos;
 	}
 
+	public ArrayList<Calculo> getCalculos() {
+		return this.calculos;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -39,6 +43,10 @@ public class Usuario {
 
 	public boolean isValidado() {
 		return validado;
+	}
+
+	public Integer getId() {
+		return this.id;
 	}
 
 }

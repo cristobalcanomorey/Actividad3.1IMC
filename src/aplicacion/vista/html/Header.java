@@ -56,7 +56,7 @@ public class Header {
 	public void addHistorial() {
 		this.historial = new Tag("a", "Historial", true, true);
 		this.historial.prepararAtributos();
-		this.historial.addAtributo("href", "Principal?historial=si");
+		this.historial.addAtributo("href", "Historial");
 	}
 
 	public Html addAPagina(Html pagina) {

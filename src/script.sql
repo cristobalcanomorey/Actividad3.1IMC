@@ -60,6 +60,7 @@ begin
 end$$
 DELIMITER ;
 
+#Trigger para insertat bajas de usuarios en altas_bajas
 DELIMITER $$
 CREATE TRIGGER bajas BEFORE DELETE ON usuario
 FOR EACH ROW

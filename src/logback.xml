@@ -22,4 +22,16 @@
   <logger name="aplicacion.controlador.Login" level="ERROR" additivity="false">
     <appender-ref ref="ERRORFILE" />
   </logger>
+  
+  <logger name="aplicacion.controlador.Historial" level="ERROR" additivity="false">
+    <appender-ref ref="ERRORFILE" />
+  </logger>
+  
+  <logger name="aplicacion.modelo.dao.UsuarioDAO" level="ERROR" additivity="false">
+    <appender-ref ref="ERRORFILE" />
+  </logger>
+  
+  <logger name="aplicacion.modelo.dao.CalculoDAO" level="ERROR" additivity="false">
+    <appender-ref ref="ERRORFILE" />
+  </logger>
 </configuration>

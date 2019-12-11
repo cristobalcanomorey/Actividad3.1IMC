@@ -13,7 +13,7 @@ import aplicacion.modelo.pojo.Usuario;
 
 public class UsuarioDAO {
 
-	private static final Logger LOG = (Logger) LogSingleton.getInstance().getLoggerUsuarioDAO();
+	private static final Logger LOG = LogSingleton.getInstance().getLoggerUsuarioDAO();
 	private static final JDBCSingleton CON = JDBCSingleton.getInstance();
 
 	/***
@@ -26,8 +26,8 @@ public class UsuarioDAO {
 	public Usuario existeUsuario(String correo, String paswd) {
 		Usuario usuario = null;
 
-		String query = "SELECT * FROM usuario WHERE correo='" + correo + "' AND password='" + paswd + "'";
 		if (correo != null && paswd != null) {
+			String query = "SELECT * FROM usuario WHERE correo='" + correo + "' AND password='" + paswd + "'";
 			try {
 				CON.setConnection("java:/comp/env", "jdbc/ActividadIMC");
 				if (CON.getConnection() != null) {
@@ -43,20 +43,20 @@ public class UsuarioDAO {
 					rs.close();
 				}
 			} catch (ClassNotFoundException | SQLException | NamingException e) {
-				LOG.error("ERROR DAO: ", e);
+				LOG.error("ERROR USUARIO DAO: ", e);
 			} finally {
 				if (CON.getStatement() != null) {
 					try {
 						CON.getConnection().close();
 					} catch (SQLException e) {
-						LOG.error("ERROR DAO: ", e);
+						LOG.error("ERROR USUARIO DAO: ", e);
 					}
 				}
 				if (CON.getConnection() != null) {
 					try {
 						CON.getConnection().close();
 					} catch (SQLException e) {
-						LOG.error("ERROR DAO: ", e);
+						LOG.error("ERROR USUARIO DAO: ", e);
 					}
 				}
 			}
