@@ -53,12 +53,12 @@ public class PaginaPrincipal {
 				tabla.addAFila(new Tag("IMC"), "th");
 				tabla.addFilaAEncabezado();
 				tabla.resetFila();
+				tabla.prepararCuerpo();
 				for (Calculo c : u.getCalculos()) {
 					tabla.addAFila(new Tag(c.getEstatura().toString()), "td");
 					tabla.addAFila(new Tag(c.getPeso().toString()), "td");
 					tabla.addAFila(new Tag(c.getFecha().toString()), "td");
-					tabla.addAFila(new Tag(c.getImc().toString()), "td");
-					tabla.prepararCuerpo();
+					tabla.addAFila(new Tag(String.format("%.2f", c.getImc())), "td");
 					tabla.addFilaACuerpo();
 					tabla.resetFila();
 				}

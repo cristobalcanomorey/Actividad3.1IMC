@@ -13,7 +13,6 @@ public class Tabla {
 	public Tabla() {
 		this.thead = new Tag("thead", null, true, true);
 		this.tbody = new Tag("tbody", null, true, true);
-		this.tbody.prepararHijos();
 	}
 
 	public void addFilaAEncabezado() {
@@ -37,24 +36,23 @@ public class Tabla {
 	}
 
 	public Html addAPagina(Html pagina) {
-		this.thead.prepararHijos();
+		thead.prepararHijos();
 		for (ArrayList<Tag> cab : encabezado) {
 			Tag tr = new Tag("tr", null, true, true);
 			tr.prepararHijos();
 			for (Tag tag : cab) {
 				tr.addChild(tag);
 			}
-			this.thead.addChild(tr);
+			thead.addChild(tr);
 		}
-		this.tbody.prepararHijos();
-		prepararCuerpo();
+		tbody.prepararHijos();
 		for (ArrayList<Tag> arrayList : cuerpo) {
 			Tag tr = new Tag("tr", null, true, true);
 			tr.prepararHijos();
 			for (Tag tag : arrayList) {
 				tr.addChild(tag);
 			}
-			this.tbody.addChild(tr);
+			tbody.addChild(tr);
 		}
 		Tag tabla = new Tag("table", null, true, true);
 		tabla.prepararHijos();

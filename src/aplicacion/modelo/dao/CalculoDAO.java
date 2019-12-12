@@ -31,7 +31,7 @@ public class CalculoDAO {
 					ResultSet rs = CON.getStatement().executeQuery(query);
 					rs.last();
 					if (rs.getRow() > 0) {
-						rs.first();
+						rs.beforeFirst();
 						hist = CalculosEJB.rsAArrayList(rs);
 					}
 					rs.close();
