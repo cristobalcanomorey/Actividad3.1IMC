@@ -24,9 +24,12 @@ public class Header {
 			this.fotoPerfil.addAtributo("src", rutaFotoPerfil);
 			this.fotoPerfil.addAtributo("alt", "fotoDePerfil");
 		}
-		this.logo = new Tag("img", null, false, false);
+		var lgo = new Tag("img", null, false, false);
+		lgo.prepararAtributos();
+		lgo.addAtributo("src", "imgs/logo.png");
+		this.logo = Tag.incrustarEn(lgo, "a");
 		this.logo.prepararAtributos();
-		this.logo.addAtributo("src", "imgs/logo.png");
+		this.logo.addAtributo("href", "Principal");
 	}
 
 	public void addLogout() {

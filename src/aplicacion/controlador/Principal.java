@@ -35,7 +35,10 @@ public class Principal extends HttpServlet {
 		Usuario usuario = sesionesEJB.usuarioLogeado(session);
 
 		response.setContentType("text/html; charset=UTF-8");
-		PaginaPrincipal paginaPrincipal = new PaginaPrincipal(usuario, null);
+		if (usuario != null) {
+			usuario.setCalculos(null);
+		}
+		PaginaPrincipal paginaPrincipal = new PaginaPrincipal(usuario, null, false);
 		try {
 			paginaPrincipal.print(response.getWriter());
 		} catch (IOException e) {
@@ -66,7 +69,7 @@ public class Principal extends HttpServlet {
 		}
 
 		response.setContentType("text/html; charset=UTF-8");
-		PaginaPrincipal paginaPrincipal = new PaginaPrincipal(usuario, imc);
+		PaginaPrincipal paginaPrincipal = new PaginaPrincipal(usuario, imc, false);
 		try {
 			paginaPrincipal.print(response.getWriter());
 		} catch (IOException e) {

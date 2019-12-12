@@ -64,10 +64,10 @@ public class Tag {
 	}
 
 	/***
-	 * Rodea el tag contenido en un list item
+	 * Rodea el tag contenido en otro tag
 	 * 
 	 * @param contenido Tag contenido
-	 * @return Tag li con el contenido
+	 * @return Tag tag con el contenido
 	 */
 	public static Tag incrustarEn(Tag contenido, String tag) {
 		Tag t = new Tag(tag, null, true, true);

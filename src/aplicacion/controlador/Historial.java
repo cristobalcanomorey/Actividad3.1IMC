@@ -42,7 +42,7 @@ public class Historial extends HttpServlet {
 			}
 		}
 		response.setContentType("text/html; charset=UTF-8");
-		PaginaPrincipal paginaPrincipal = new PaginaPrincipal(usuario, null);
+		PaginaPrincipal paginaPrincipal = new PaginaPrincipal(usuario, null, true);
 		try {
 			paginaPrincipal.print(response.getWriter());
 		} catch (IOException e) {
@@ -74,11 +74,11 @@ public class Historial extends HttpServlet {
 			p = Float.parseFloat(peso);
 			a = Float.parseFloat(altura);
 			Calculo calculo = new Calculo(null, p, a, new Date());
-			calculo.setImc(calculosEJB.calcula(p, a));
+			calculo.setImc(CalculosEJB.calcula(p, a));
 			imc = String.format("%.2f", calculo.getImc());
 		}
 		response.setContentType("text/html; charset=UTF-8");
-		PaginaPrincipal paginaPrincipal = new PaginaPrincipal(usuario, imc);
+		PaginaPrincipal paginaPrincipal = new PaginaPrincipal(usuario, imc, true);
 		try {
 			paginaPrincipal.print(response.getWriter());
 		} catch (IOException e) {

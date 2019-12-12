@@ -60,7 +60,8 @@ public class CalculoDAO {
 
 	public static void insertCalculo(Usuario usuario, Calculo calculo) {
 		String query = "INSERT INTO calculo (estatura,peso,fecha,idUsuario) values ('" + calculo.getEstatura() + "','"
-				+ calculo.getPeso() + "','" + calculo.getFecha() + "','" + usuario.getId() + "')";
+				+ calculo.getPeso() + "','" + CalculosEJB.fechaAString(calculo.getFecha()) + "','" + usuario.getId()
+				+ "')";
 		try {
 			CON.setConnection("java:/comp/env", "jdbc/ActividadIMC");
 			if (CON.getConnection() != null) {

@@ -17,7 +17,7 @@ public class PaginaPrincipal {
 	private Header header;
 	private Cuerpo cuerpo;
 
-	public PaginaPrincipal(Usuario usu, String resul) {
+	public PaginaPrincipal(Usuario usu, String resul, boolean historial) {
 		this.pagina = new Html("Principal", "css/style.css", "js/script.js");
 		if (usu != null) {
 			this.header = new Header(usu.getNombre(), usu.getFoto());
@@ -30,8 +30,14 @@ public class PaginaPrincipal {
 			this.header.addLogin();
 		}
 		this.header.addAPagina(this.pagina);
-		pagina.addABody(new Tag("h1", "Calcular IMC", true, true));
-		Formulario form = crearFormCalc();
+		Formulario form;
+		if (historial) {
+			pagina.addABody(new Tag("h1", "Historial", true, true));
+			form = null;
+		} else {
+			pagina.addABody(new Tag("h1", "Calcular IMC", true, true));
+			form = crearFormCalc("POST", "Principal");
+		}
 		Tag resultado = null;
 		if (resul != null) {
 			resultado = new Tag("p", resul, true, true);
@@ -67,8 +73,8 @@ public class PaginaPrincipal {
 		return tabla;
 	}
 
-	private Formulario crearFormCalc() {
-		Formulario form = new Formulario("POST", "Principal");
+	private Formulario crearFormCalc(String metodo, String sitio) {
+		Formulario form = new Formulario(metodo, sitio);
 		form.addItem(new Tag("p", "Peso", true, true));
 		Tag peso = new Tag("input", null, false, false);
 		peso.prepararAtributos();
