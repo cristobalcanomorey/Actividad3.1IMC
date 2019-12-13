@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import aplicacion.controlador.Historial;
 import aplicacion.controlador.Login;
+import aplicacion.controlador.Logout;
 import aplicacion.controlador.Principal;
 import aplicacion.modelo.dao.CalculoDAO;
 import aplicacion.modelo.dao.UsuarioDAO;
@@ -16,6 +17,7 @@ public class LogSingleton {
 	private Logger loggerUsuarioDAO = LoggerFactory.getLogger(UsuarioDAO.class);
 	private Logger loggerHistorial = LoggerFactory.getLogger(Historial.class);
 	private Logger loggerCalculoDAO = LoggerFactory.getLogger(CalculoDAO.class);
+	private Logger loggerLogout = LoggerFactory.getLogger(Logout.class);
 
 	/**
 	 * Constructor privado
@@ -75,6 +77,15 @@ public class LogSingleton {
 	 */
 	public Logger getLoggerCalculoDAO() {
 		return loggerCalculoDAO;
+	}
+
+	/***
+	 * Obtener el logger para Logout
+	 * 
+	 * @return Logger
+	 */
+	public Logger getLoggerLogout() {
+		return loggerLogout;
 	}
 
 }

@@ -23,6 +23,14 @@
     <appender-ref ref="ERRORFILE" />
   </logger>
   
+  <logger name="aplicacion.controlador.Logout" level="ERROR" additivity="false">
+    <appender-ref ref="ERRORFILE" />
+  </logger>
+  
+  <logger name="aplicacion.controlador.Registro" level="ERROR" additivity="false">
+    <appender-ref ref="ERRORFILE" />
+  </logger>
+  
   <logger name="aplicacion.controlador.Historial" level="ERROR" additivity="false">
     <appender-ref ref="ERRORFILE" />
   </logger>
