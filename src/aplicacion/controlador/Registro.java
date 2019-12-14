@@ -85,7 +85,7 @@ public class Registro extends HttpServlet {
 		if (nombre != null & correo != null & paswd != null) {
 			if (!usuariosEJB.existeUsuario(correo)) {
 				try {
-					String rutaPerfil = correo.replace("[\\.@]", "");
+					String rutaPerfil = correo.replace("@", "_").replace(".", "_");
 					fPerfil = usuariosEJB.crearFotoDePerfil(uploadPath, request.getParts(), rutaPerfil);
 					Usuario nuevo = new Usuario(correo, nombre, paswd, fPerfil, false, new Date());
 					correoEnviado = usuariosEJB.registrarUsuario(nuevo);
@@ -94,14 +94,16 @@ public class Registro extends HttpServlet {
 				}
 			} else {
 				try {
-					response.sendRedirect("Registro?error=" + USUARIO_EXISTE);
+					if (!response.isCommitted())
+						response.sendRedirect("Registro?error=" + USUARIO_EXISTE);
 				} catch (IOException e) {
 					log.getLoggerRegistro().error("Se ha producido un error en Post Registro: ", e);
 				}
 			}
 		} else {
 			try {
-				response.sendRedirect("Registro?error=" + FALTAN_DATOS);
+				if (!response.isCommitted())
+					response.sendRedirect("Registro?error=" + FALTAN_DATOS);
 			} catch (IOException e) {
 				log.getLoggerRegistro().error("Se ha producido un error en Post Registro: ", e);
 			}
@@ -112,16 +114,19 @@ public class Registro extends HttpServlet {
 		}
 
 		if (correoEnviado) {
-			response.setContentType("text/html; charset=UTF-8");
-			PaginaRegistro paginaRegistro = new PaginaRegistro(null, true);
-			try {
-				paginaRegistro.print(response.getWriter());
-			} catch (IOException e) {
-				log.getLoggerRegistro().error("Se ha producido un error en Post Registro: ", e);
+			if (!response.isCommitted()) {
+				response.setContentType("text/html; charset=UTF-8");
+				PaginaRegistro paginaRegistro = new PaginaRegistro(null, true);
+				try {
+					paginaRegistro.print(response.getWriter());
+				} catch (IOException e) {
+					log.getLoggerRegistro().error("Se ha producido un error en Post Registro: ", e);
+				}
 			}
 		} else {
 			try {
-				response.sendRedirect("Registro?error=" + ERROR_CORREO);
+				if (!response.isCommitted())
+					response.sendRedirect("Registro?error=" + ERROR_CORREO);
 			} catch (IOException e) {
 				log.getLoggerRegistro().error("Se ha producido un error en Post Registro: ", e);
 			}

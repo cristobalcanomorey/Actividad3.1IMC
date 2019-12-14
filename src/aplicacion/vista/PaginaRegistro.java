@@ -61,6 +61,7 @@ public class PaginaRegistro {
 		nombre.prepararAtributos();
 		nombre.addAtributo("type", "string");
 		nombre.addAtributo("name", "nombre");
+		nombre.addAtributo("required", null);
 		form.addItem(nombre);
 
 		// Añade el input para correo
@@ -69,6 +70,7 @@ public class PaginaRegistro {
 		correo.prepararAtributos();
 		correo.addAtributo("type", "email");
 		correo.addAtributo("name", "correo");
+		correo.addAtributo("required", null);
 		form.addItem(correo);
 
 		// Añade el input para contraseña
@@ -77,6 +79,7 @@ public class PaginaRegistro {
 		password.prepararAtributos();
 		password.addAtributo("type", "password");
 		password.addAtributo("name", "paswd");
+		password.addAtributo("required", null);
 		form.addItem(password);
 
 		// Añade el input para la foto de perfil

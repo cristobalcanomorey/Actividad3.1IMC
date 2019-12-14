@@ -90,7 +90,8 @@ public class UsuariosEJB {
 		Tag enlace = new Tag("a", "Haz clic aquí para validar tu cuenta.", true, true);
 		enlace.prepararAtributos();
 		enlace.addAtributo("href", "Validar?codigo=" + codigo);
-		return mailEJB.sendMail(nuevo.getCorreo(), "Validar tu cuenta en Actividad3.1IMC", enlace.toString(), correo);
+		return mailEJB.sendMail(nuevo.getCorreo(), "Validar tu cuenta en Actividad3.1IMC",
+				"Haz clic aquí para validar tu cuenta.", correo);
 	}
 
 	/***

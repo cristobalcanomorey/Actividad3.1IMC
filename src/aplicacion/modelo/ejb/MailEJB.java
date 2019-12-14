@@ -28,7 +28,7 @@ public class MailEJB {
 
 	public boolean sendMail(String para, String asunto, String mensaje, Mail correo) {
 		Properties prop = new Properties();
-		prop.put("mail.smtp.auth", true);
+		prop.put("mail.smtp.auth", "true");
 		prop.put("mail.smtp.starttls.enable", "true");
 		prop.put("mail.smtp.host", correo.getHost());
 		prop.put("mail.smtp.port", correo.getPort());
@@ -37,13 +37,13 @@ public class MailEJB {
 		Session session = Session.getInstance(prop, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(correo.getUsername(), correo.getPassword());
+				return new PasswordAuthentication(correo.getCorreo(), correo.getPassword());
 			}
 		});
 
 		try {
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(correo.getUsername()));
+			message.setFrom(new InternetAddress(correo.getCorreo()));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(para));
 			message.setSubject(asunto);
 
@@ -58,12 +58,13 @@ public class MailEJB {
 			Transport.send(message);
 			return true;
 		} catch (Exception e) {
-			LOG.error("ERROR Correo MailEJB", e);
+			e.printStackTrace();
+			// LOG.error("ERROR Correo MailEJB", e);
 			return false;
 		}
 	}
 
-	public Mail getMail(String string, int i, String string2, String string3) {
-		return new Mail("smtp.gmail.com", 587, "imcpractica@gmail.com", "contrasenyaimc");
+	public Mail getMail(String host, int puerto, String remitente, String password) {
+		return new Mail(host, puerto, remitente, password);
 	}
 }

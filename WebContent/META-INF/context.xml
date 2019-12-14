@@ -1,3 +1,10 @@
-<Context>
-  <Manager pathname="" />
-</Context>
+<?xml version="1.0" encoding="UTF-8"?>
+<Context reloadable="true">
+<Manager pathname="" />
+     <Resource id="mail/Session" name="mail/Session" auth="Container"
+         type="javax.mail.Session" mail.smtp.host="smtp.gmail.com"
+         mail.smtp.port="587" mail.smtp.auth="true"
+		 mail.smtp.user="tofolcanodaw2@gmail.com"
+         mail.smtp.password="Z11346Ppiv23" password="Z11346Ppiv23"
+         mail.transport.protocol="smtp" mail.smtp.ssl.enable="true" />
+</Context> 
