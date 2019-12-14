@@ -18,6 +18,14 @@ public class Formulario {
 		this.items.add(item);
 	}
 
+	public Tag getForm() {
+		return form;
+	}
+
+	public void setForm(Tag form) {
+		this.form = form;
+	}
+
 	public Html addAPagina(Html pagina) {
 		this.form.prepararHijos();
 		for (Tag tag : items) {

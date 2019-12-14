@@ -50,6 +50,11 @@ public class PaginaRegistro {
 	private Formulario crearFormRegistro() {
 		Formulario form = new Formulario("POST", "Registro");
 
+		// Añade el enctype="multipart/form-data" al formulario
+		Tag f = form.getForm();
+		f.addAtributo("enctype", "multipart/form-data");
+		form.setForm(f);
+
 		// Añade el input para nombre de usuario
 		form.addItem(new Tag("p", "Nombre de usuario", true, true));
 		Tag nombre = new Tag("input", null, false, false);

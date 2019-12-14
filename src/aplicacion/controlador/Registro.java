@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import aplicacion.modelo.pojo.Usuario;
 import aplicacion.vista.PaginaRegistro;
 
 @WebServlet("/Registro")
+@MultipartConfig(maxFileSize = 1024 * 1024 * 5)
 public class Registro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String UPLOAD_DIRECTORY = "imgs" + File.separator + "users";
@@ -33,12 +35,6 @@ public class Registro extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-		// * error = parametro error
-		// * if(logeado)
-		// * redirect(Principal)
-		// * else
-		// * muestra PaginaRegistro, error
-		// *
 		HttpSession session = request.getSession(false);
 		LogSingleton log = LogSingleton.getInstance();
 
@@ -89,7 +85,8 @@ public class Registro extends HttpServlet {
 		if (nombre != null & correo != null & paswd != null) {
 			if (!usuariosEJB.existeUsuario(correo)) {
 				try {
-					fPerfil = usuariosEJB.crearFotoDePerfil(uploadPath, request.getParts(), correo);
+					String rutaPerfil = correo.replace("[\\.@]", "");
+					fPerfil = usuariosEJB.crearFotoDePerfil(uploadPath, request.getParts(), rutaPerfil);
 					Usuario nuevo = new Usuario(correo, nombre, paswd, fPerfil, false, new Date());
 					correoEnviado = usuariosEJB.registrarUsuario(nuevo);
 				} catch (IOException | ServletException e) {

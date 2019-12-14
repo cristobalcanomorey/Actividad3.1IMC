@@ -104,9 +104,10 @@ public class UsuarioDAO {
 	}
 
 	public static void insertUsuario(Usuario nuevo) {
+		int esValidado = nuevo.isValidado() ? 1 : 0;
 		String queryUsuario = "INSERT INTO usuario (correo,nombre,password,foto,validado,fechaRegistro) VALUES ('"
 				+ nuevo.getCorreo() + "','" + nuevo.getNombre() + "','" + nuevo.getPassword() + "','" + nuevo.getFoto()
-				+ "','" + nuevo.isValidado() + "','" + UsuariosEJB.fechaAString(new Date()) + "')";
+				+ "','" + esValidado + "','" + UsuariosEJB.fechaAString(new Date()) + "')";
 		try {
 			CON.setConnection("java:/comp/env", "jdbc/ActividadIMC");
 			if (CON.getConnection() != null) {
@@ -134,9 +135,9 @@ public class UsuarioDAO {
 
 	}
 
-	public static void insertValidacion(Usuario nuevo, String codigo) {
+	public static void insertValidacion(Usuario usuario, String codigo) {
 		String queryValidacion = "INSERT INTO validacion (codigo,idUsuario) VALUES ('" + codigo + "','"
-				+ nuevo.getId().toString() + "')";
+				+ usuario.getId().toString() + "')";
 		try {
 			CON.setConnection("java:/comp/env", "jdbc/ActividadIMC");
 			if (CON.getConnection() != null) {

@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.servlet.http.Part;
 
 import aplicacion.modelo.dao.UsuarioDAO;
+import aplicacion.modelo.pojo.Mail;
 import aplicacion.modelo.pojo.Usuario;
 import aplicacion.vista.html.especificos.Tag;
 
@@ -21,7 +22,7 @@ import aplicacion.vista.html.especificos.Tag;
 public class UsuariosEJB {
 
 	@EJB
-	MailEJB mailEJB = new MailEJB("smtp.gmail.com", 587, "imcpractica@gmail.com", "contrasenyaimc");
+	MailEJB mailEJB;
 
 	public Usuario existeUsuario(String correo, String paswd) {
 		return UsuarioDAO.existeUsuario(correo, paswd);
@@ -79,16 +80,17 @@ public class UsuariosEJB {
 	public boolean registrarUsuario(Usuario nuevo) {
 		String codigo = codigoAleatorio();
 		UsuarioDAO.insertUsuario(nuevo);
-		nuevo = UsuarioDAO.existeUsuario(nuevo.getCorreo(), nuevo.getPassword());
-		UsuarioDAO.insertValidacion(nuevo, codigo);
-		return enviarCorreo(nuevo, codigo);
+		Usuario usu = UsuarioDAO.existeUsuario(nuevo.getCorreo(), nuevo.getPassword());
+		UsuarioDAO.insertValidacion(usu, codigo);
+		return enviarCorreo(usu, codigo);
 	}
 
 	private boolean enviarCorreo(Usuario nuevo, String codigo) {
+		Mail correo = mailEJB.getMail("smtp.gmail.com", 587, "tofolcanodaw2@gmail.com", "Z11346Ppiv23");
 		Tag enlace = new Tag("a", "Haz clic aquí para validar tu cuenta.", true, true);
 		enlace.prepararAtributos();
 		enlace.addAtributo("href", "Validar?codigo=" + codigo);
-		return mailEJB.sendMail(nuevo.getCorreo(), "Validar tu cuenta en Actividad3.1IMC", enlace.toString());
+		return mailEJB.sendMail(nuevo.getCorreo(), "Validar tu cuenta en Actividad3.1IMC", enlace.toString(), correo);
 	}
 
 	/***
