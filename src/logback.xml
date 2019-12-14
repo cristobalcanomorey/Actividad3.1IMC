@@ -35,6 +35,10 @@
     <appender-ref ref="ERRORFILE" />
   </logger>
   
+  <logger name="aplicacion.modelo.ejb.MailEJB" level="ERROR" additivity="false">
+    <appender-ref ref="ERRORFILE" />
+  </logger>
+  
   <logger name="aplicacion.modelo.dao.UsuarioDAO" level="ERROR" additivity="false">
     <appender-ref ref="ERRORFILE" />
   </logger>

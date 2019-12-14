@@ -89,7 +89,7 @@ public class Registro extends HttpServlet {
 		if (nombre != null & correo != null & paswd != null) {
 			if (!usuariosEJB.existeUsuario(correo)) {
 				try {
-					fPerfil = usuariosEJB.crearFotoDePerfil(uploadPath, request.getParts(), nombre);
+					fPerfil = usuariosEJB.crearFotoDePerfil(uploadPath, request.getParts(), correo);
 					Usuario nuevo = new Usuario(correo, nombre, paswd, fPerfil, false, new Date());
 					correoEnviado = usuariosEJB.registrarUsuario(nuevo);
 				} catch (IOException | ServletException e) {

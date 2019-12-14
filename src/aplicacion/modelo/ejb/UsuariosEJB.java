@@ -7,16 +7,21 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Random;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.servlet.http.Part;
 
 import aplicacion.modelo.dao.UsuarioDAO;
 import aplicacion.modelo.pojo.Usuario;
+import aplicacion.vista.html.especificos.Tag;
 
 @Stateless
 @LocalBean
 public class UsuariosEJB {
+
+	@EJB
+	MailEJB mailEJB = new MailEJB("smtp.gmail.com", 587, "imcpractica@gmail.com", "contrasenyaimc");
 
 	public Usuario existeUsuario(String correo, String paswd) {
 		return UsuarioDAO.existeUsuario(correo, paswd);
@@ -80,8 +85,10 @@ public class UsuariosEJB {
 	}
 
 	private boolean enviarCorreo(Usuario nuevo, String codigo) {
-
-		return false;
+		Tag enlace = new Tag("a", "Haz clic aquí para validar tu cuenta.", true, true);
+		enlace.prepararAtributos();
+		enlace.addAtributo("href", "Validar?codigo=" + codigo);
+		return mailEJB.sendMail(nuevo.getCorreo(), "Validar tu cuenta en Actividad3.1IMC", enlace.toString());
 	}
 
 	/***
