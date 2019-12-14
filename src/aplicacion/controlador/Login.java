@@ -29,16 +29,6 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession(false);
 		LogSingleton log = LogSingleton.getInstance();
-		String error = request.getParameter("error");
-		String err1 = "El correo o la contraseña no son correctos";
-		String err2 = "Esta cuenta aún no ha sido validada";
-		if (error != null) {
-			if (error.equals("1")) {
-				error = err1;
-			} else if (error.equals("2")) {
-				error = err2;
-			}
-		}
 
 		Usuario usuario = sesionesEJB.usuarioLogeado(session);
 
@@ -49,6 +39,16 @@ public class Login extends HttpServlet {
 				log.getLoggerLogin().error("Se ha producido un error en GET de Login: ", e);
 			}
 		} else {
+			String error = request.getParameter("error");
+			String err1 = "El correo o la contraseña no son correctos";
+			String err2 = "Esta cuenta aún no ha sido validada";
+			if (error != null) {
+				if (error.equals("1")) {
+					error = err1;
+				} else if (error.equals("2")) {
+					error = err2;
+				}
+			}
 			response.setContentType("text/html; charset=UTF-8");
 			PaginaLogin paginaLogin = new PaginaLogin(error);
 			try {

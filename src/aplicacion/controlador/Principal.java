@@ -61,7 +61,7 @@ public class Principal extends HttpServlet {
 			p = Float.parseFloat(peso);
 			a = Float.parseFloat(altura);
 			Calculo calculo = new Calculo(null, p, a, new Date());
-			calculo.setImc(calculosEJB.calcula(p, a));
+			calculo.setImc(CalculosEJB.calcula(p, a));
 			imc = String.format("%.2f", calculo.getImc());
 			if (usuario != null) {
 				calculosEJB.guardarCalculo(usuario, calculo);

@@ -7,6 +7,7 @@ import aplicacion.controlador.Historial;
 import aplicacion.controlador.Login;
 import aplicacion.controlador.Logout;
 import aplicacion.controlador.Principal;
+import aplicacion.controlador.Registro;
 import aplicacion.modelo.dao.CalculoDAO;
 import aplicacion.modelo.dao.UsuarioDAO;
 
@@ -18,6 +19,7 @@ public class LogSingleton {
 	private Logger loggerHistorial = LoggerFactory.getLogger(Historial.class);
 	private Logger loggerCalculoDAO = LoggerFactory.getLogger(CalculoDAO.class);
 	private Logger loggerLogout = LoggerFactory.getLogger(Logout.class);
+	private Logger registroLogout = LoggerFactory.getLogger(Registro.class);
 
 	/**
 	 * Constructor privado
@@ -86,6 +88,15 @@ public class LogSingleton {
 	 */
 	public Logger getLoggerLogout() {
 		return loggerLogout;
+	}
+
+	/***
+	 * Obtener el logger para Registro
+	 * 
+	 * @return Logger
+	 */
+	public Logger getLoggerRegistro() {
+		return registroLogout;
 	}
 
 }

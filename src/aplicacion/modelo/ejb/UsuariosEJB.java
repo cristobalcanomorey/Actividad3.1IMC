@@ -1,7 +1,15 @@
 package aplicacion.modelo.ejb;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Random;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.servlet.http.Part;
 
 import aplicacion.modelo.dao.UsuarioDAO;
 import aplicacion.modelo.pojo.Usuario;
@@ -11,8 +19,91 @@ import aplicacion.modelo.pojo.Usuario;
 public class UsuariosEJB {
 
 	public Usuario existeUsuario(String correo, String paswd) {
-		UsuarioDAO usuariosDAO = new UsuarioDAO();
-		return usuariosDAO.existeUsuario(correo, paswd);
+		return UsuarioDAO.existeUsuario(correo, paswd);
 	}
 
+	public boolean existeUsuario(String correo) {
+		return UsuarioDAO.existeUsuario(correo);
+	}
+
+	public String crearFotoDePerfil(String carpeta, Collection<Part> partes, String usuario) throws IOException {
+		// Si la ruta no existe la crearemos
+		File uploadDir = new File(carpeta);
+		if (!uploadDir.exists()) {
+			uploadDir.mkdir();
+		}
+		// Lo utilizaremos para guardar el nombre del archivo
+		String fileName = null;
+
+		// Obtenemos el archivo y lo guardamos a disco
+		for (Part part : partes) {
+			fileName = UsuariosEJB.getFileNameDeUsuario(part, usuario);
+			part.write(carpeta + File.separator + fileName);
+		}
+
+		// Si es una imagen guardamos la ruta en fPerfil
+		if (fileName.matches(".+\\.(jpg|png|jpeg)")) {
+			return fileName;
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Obtiene el nombre original de la foto de perfíl y lo substituye por el nombre
+	 * de usuario o por default si no hay
+	 * 
+	 * @param part    Documento obtenido
+	 * @param usuario Nombre de usuario
+	 * @return Nombre del documento modificado
+	 */
+	private static String getFileNameDeUsuario(Part part, String usuario) {
+		String resul = "";
+		for (String content : part.getHeader("content-disposition").split(";")) {
+			if (content.trim().startsWith("filename"))
+				resul = content.substring(content.indexOf("=") + 2, content.length() - 1);
+		}
+		if (resul.indexOf(".") == -1) {
+			return "default.png";
+		}
+		String nombreOriginal = resul.substring(0, resul.indexOf("."));
+		resul = resul.replace(nombreOriginal, usuario);
+		return resul;
+	}
+
+	public boolean registrarUsuario(Usuario nuevo) {
+		String codigo = codigoAleatorio();
+		UsuarioDAO.insertUsuario(nuevo);
+		nuevo = UsuarioDAO.existeUsuario(nuevo.getCorreo(), nuevo.getPassword());
+		UsuarioDAO.insertValidacion(nuevo, codigo);
+		return enviarCorreo(nuevo, codigo);
+	}
+
+	private boolean enviarCorreo(Usuario nuevo, String codigo) {
+
+		return false;
+	}
+
+	/***
+	 * Crea un String con 21 letras aleatorias entre la a y la z
+	 * 
+	 * @return String aleatorio
+	 */
+	private String codigoAleatorio() {
+		int leftLimit = 97; // letra 'a'
+		int rightLimit = 122; // letra 'z'
+		int targetStringLength = 21;
+		Random random = new Random();
+		StringBuilder buffer = new StringBuilder(targetStringLength);
+		for (int i = 0; i < targetStringLength; i++) {
+			int randomLimitedInt = leftLimit + (int) (random.nextFloat() * (rightLimit - leftLimit + 1));
+			buffer.append((char) randomLimitedInt);
+		}
+		return buffer.toString();
+	}
+
+	public static String fechaAString(Date fecha) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(fecha);
+	}
 }

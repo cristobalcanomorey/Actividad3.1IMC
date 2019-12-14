@@ -25,6 +25,15 @@ public class Usuario {
 		this.fechaRegistro = fechaRegistro;
 	}
 
+	public Usuario(String correo, String nombre, String password, String foto, boolean validado, Date fechaRegistro) {
+		this.correo = correo;
+		this.nombre = nombre;
+		this.password = password;
+		this.foto = foto;
+		this.validado = validado;
+		this.fechaRegistro = fechaRegistro;
+	}
+
 	public void setCalculos(ArrayList<Calculo> calculos) {
 		this.calculos = calculos;
 	}

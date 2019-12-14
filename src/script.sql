@@ -2,12 +2,22 @@ CREATE DATABASE IF NOT EXISTS ActividadIMC;
 
 use ActividadIMC;
 
-#SET GLOBAL validate_password_policy = 0;
-
 DROP USER IF EXISTS 'tofol'@'localhost';
 DROP USER IF EXISTS 'tofol'@'%';
 
-CREATE USER IF NOT EXISTS 'tofol'@'%' IDENTIFIED BY 'password';
+drop procedure if exists crear_usuario;
+
+#Procedure que intenta bajar el nivel de seguridad y crea el usuario
+DELIMITER $$
+CREATE PROCEDURE crear_usuario()
+BEGIN
+	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+		SET GLOBAL validate_password_policy = 0;
+	CREATE USER IF NOT EXISTS 'tofol'@'%' IDENTIFIED BY 'password';
+END$$
+DELIMITER ;
+
+CALL crear_usuario();
 
 GRANT ALL PRIVILEGES ON ActividadIMC.* TO 'tofol'@'%' WITH GRANT OPTION;
 

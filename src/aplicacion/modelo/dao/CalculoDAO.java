@@ -70,6 +70,21 @@ public class CalculoDAO {
 			}
 		} catch (ClassNotFoundException | SQLException | NamingException e) {
 			LOG.error("ERROR CALCULO DAO: ", e);
+		} finally {
+			if (CON.getStatement() != null) {
+				try {
+					CON.getConnection().close();
+				} catch (SQLException e) {
+					LOG.error("ERROR CALCULO DAO: ", e);
+				}
+			}
+			if (CON.getConnection() != null) {
+				try {
+					CON.getConnection().close();
+				} catch (SQLException e) {
+					LOG.error("ERROR CALCULO DAO: ", e);
+				}
+			}
 		}
 
 	}
