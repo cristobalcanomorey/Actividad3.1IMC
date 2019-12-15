@@ -10,6 +10,7 @@ import aplicacion.controlador.Principal;
 import aplicacion.controlador.Registro;
 import aplicacion.modelo.dao.CalculoDAO;
 import aplicacion.modelo.dao.UsuarioDAO;
+import aplicacion.modelo.dao.ValidacionDAO;
 import aplicacion.modelo.ejb.MailEJB;
 
 public class LogSingleton {
@@ -22,6 +23,7 @@ public class LogSingleton {
 	private Logger loggerLogout = LoggerFactory.getLogger(Logout.class);
 	private Logger loggerRegistro = LoggerFactory.getLogger(Registro.class);
 	private Logger loggerMailEJB = LoggerFactory.getLogger(MailEJB.class);
+	private Logger loggerValidacionDAO = LoggerFactory.getLogger(ValidacionDAO.class);
 
 	/**
 	 * Constructor privado
@@ -108,6 +110,15 @@ public class LogSingleton {
 	 */
 	public Logger getLoggerMailEJB() {
 		return loggerMailEJB;
+	}
+
+	/***
+	 * Obtener el logger para ValidacionDAO
+	 * 
+	 * @return Logger
+	 */
+	public Logger getLoggerValidacionDAO() {
+		return loggerValidacionDAO;
 	}
 
 }

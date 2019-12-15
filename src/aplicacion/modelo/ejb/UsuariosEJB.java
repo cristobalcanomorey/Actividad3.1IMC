@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.servlet.http.Part;
 
 import aplicacion.modelo.dao.UsuarioDAO;
+import aplicacion.modelo.dao.ValidacionDAO;
 import aplicacion.modelo.pojo.Mail;
 import aplicacion.modelo.pojo.Usuario;
 import aplicacion.vista.html.especificos.Tag;
@@ -81,17 +82,16 @@ public class UsuariosEJB {
 		String codigo = codigoAleatorio();
 		UsuarioDAO.insertUsuario(nuevo);
 		Usuario usu = UsuarioDAO.existeUsuario(nuevo.getCorreo(), nuevo.getPassword());
-		UsuarioDAO.insertValidacion(usu, codigo);
+		ValidacionDAO.insertValidacion(usu, codigo);
 		return enviarCorreo(usu, codigo);
 	}
 
 	private boolean enviarCorreo(Usuario nuevo, String codigo) {
-		Mail correo = mailEJB.getMail("smtp.gmail.com", 587, "tofolcanodaw2@gmail.com", "Z11346Ppiv23");
+		Mail correo = mailEJB.getMail("smtp.gmail.com", 587, "imcpractica@gmail.com", "contrasenyaimc");
 		Tag enlace = new Tag("a", "Haz clic aquí para validar tu cuenta.", true, true);
 		enlace.prepararAtributos();
-		enlace.addAtributo("href", "Validar?codigo=" + codigo);
-		return mailEJB.sendMail(nuevo.getCorreo(), "Validar tu cuenta en Actividad3.1IMC",
-				"Haz clic aquí para validar tu cuenta.", correo);
+		enlace.addAtributo("href", "Validacion?codigo=" + codigo);
+		return mailEJB.sendMail(nuevo.getCorreo(), "Validar tu cuenta en Actividad3.1IMC", enlace.toString(), correo);
 	}
 
 	/***
@@ -115,5 +115,11 @@ public class UsuariosEJB {
 	public static String fechaAString(Date fecha) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		return sdf.format(fecha);
+	}
+
+	public void validar(String codigo) {
+		String idUsuario = ValidacionDAO.selectIdUsuario(codigo);
+		UsuarioDAO.validarPorId(idUsuario);
+		ValidacionDAO.borrar(codigo);
 	}
 }

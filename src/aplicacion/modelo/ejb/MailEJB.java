@@ -58,8 +58,7 @@ public class MailEJB {
 			Transport.send(message);
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
-			// LOG.error("ERROR Correo MailEJB", e);
+			LOG.error("ERROR Correo MailEJB", e);
 			return false;
 		}
 	}

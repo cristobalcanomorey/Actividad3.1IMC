@@ -135,14 +135,13 @@ public class UsuarioDAO {
 
 	}
 
-	public static void insertValidacion(Usuario usuario, String codigo) {
-		String queryValidacion = "INSERT INTO validacion (codigo,idUsuario) VALUES ('" + codigo + "','"
-				+ usuario.getId().toString() + "')";
+	public static void validarPorId(String idUsuario) {
+		String update = "UPDATE usuario SET validado=1 WHERE id=" + idUsuario;
 		try {
 			CON.setConnection("java:/comp/env", "jdbc/ActividadIMC");
 			if (CON.getConnection() != null) {
 				CON.setStatement();
-				CON.getStatement().executeUpdate(queryValidacion);
+				CON.getStatement().executeUpdate(update);
 			}
 		} catch (ClassNotFoundException | SQLException | NamingException e) {
 			LOG.error("ERROR USUARIO DAO: ", e);
@@ -163,5 +162,4 @@ public class UsuarioDAO {
 			}
 		}
 	}
-
 }
