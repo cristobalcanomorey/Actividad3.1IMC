@@ -14,11 +14,23 @@ import aplicacion.modelo.ejb.CalculosEJB;
 import aplicacion.modelo.pojo.Calculo;
 import aplicacion.modelo.pojo.Usuario;
 
+/***
+ * Gestiona los movimientos de la tabla calculo en la BBDD
+ * 
+ * @author tofol
+ *
+ */
 public class CalculoDAO {
 
 	private static final Logger LOG = LogSingleton.getInstance().getLoggerCalculoDAO();
 	private static final JDBCSingleton CON = JDBCSingleton.getInstance();
 
+	/***
+	 * Obtiene los cálculos de un usuario.
+	 * 
+	 * @param usuario Usuario al que se le busca su historial
+	 * @return Historial del usuario
+	 */
 	public static ArrayList<Calculo> getHistorial(Usuario usuario) {
 		ArrayList<Calculo> hist = null;
 
@@ -58,6 +70,12 @@ public class CalculoDAO {
 		return hist;
 	}
 
+	/***
+	 * Añade un calculo.
+	 * 
+	 * @param usuario Usuario que ha hecho el cálculo
+	 * @param calculo Calculo realizado.
+	 */
 	public static void insertCalculo(Usuario usuario, Calculo calculo) {
 		String query = "INSERT INTO calculo (estatura,peso,fecha,idUsuario) values ('" + calculo.getEstatura() + "','"
 				+ calculo.getPeso() + "','" + CalculosEJB.fechaAString(calculo.getFecha()) + "','" + usuario.getId()

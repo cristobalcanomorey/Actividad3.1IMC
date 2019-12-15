@@ -17,6 +17,12 @@ import aplicacion.modelo.pojo.Calculo;
 import aplicacion.modelo.pojo.Usuario;
 import aplicacion.vista.PaginaPrincipal;
 
+/***
+ * Servlet para la página principal
+ * 
+ * @author tofol
+ *
+ */
 @WebServlet("/Principal")
 public class Principal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,6 +33,12 @@ public class Principal extends HttpServlet {
 	@EJB
 	CalculosEJB calculosEJB;
 
+	/***
+	 * Muestra la página principal con o sin el usuario.
+	 * 
+	 * Si el usuario está logeado le quita el historial para que no se muestre la
+	 * tabla en la página principal.
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession(false);
@@ -46,6 +58,10 @@ public class Principal extends HttpServlet {
 		}
 	}
 
+	/***
+	 * Muestra la página principal con el resultado del calculo IMC y lo guarda si
+	 * el usuario está logeado.
+	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession(false);

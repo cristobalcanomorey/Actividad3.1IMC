@@ -13,6 +13,12 @@ import aplicacion.modelo.LogSingleton;
 import aplicacion.modelo.ejb.UsuariosEJB;
 import aplicacion.modelo.pojo.Usuario;
 
+/***
+ * Gestiona los movimientos de la tabla usuario en la BBDD
+ * 
+ * @author tofol
+ *
+ */
 public class UsuarioDAO {
 
 	private static final Logger LOG = LogSingleton.getInstance().getLoggerUsuarioDAO();
@@ -66,6 +72,12 @@ public class UsuarioDAO {
 		return usuario;
 	}
 
+	/***
+	 * Comprueba si hay un usuario con ese correo.
+	 * 
+	 * @param correo Correo que se busca.
+	 * @return True si lo ha encontrado, false si no.
+	 */
 	public static boolean existeUsuario(String correo) {
 		boolean existe = false;
 		if (correo != null) {
@@ -103,6 +115,11 @@ public class UsuarioDAO {
 		return existe;
 	}
 
+	/***
+	 * Añade un usuario a la tabla
+	 * 
+	 * @param nuevo El nuevo usuario
+	 */
 	public static void insertUsuario(Usuario nuevo) {
 		int esValidado = nuevo.isValidado() ? 1 : 0;
 		String queryUsuario = "INSERT INTO usuario (correo,nombre,password,foto,validado,fechaRegistro) VALUES ('"
@@ -135,6 +152,11 @@ public class UsuarioDAO {
 
 	}
 
+	/***
+	 * Valida a un usuario.
+	 * 
+	 * @param idUsuario Id del usuario a validar.
+	 */
 	public static void validarPorId(String idUsuario) {
 		String update = "UPDATE usuario SET validado=1 WHERE id=" + idUsuario;
 		try {
@@ -163,6 +185,11 @@ public class UsuarioDAO {
 		}
 	}
 
+	/***
+	 * Borra a un usuario.
+	 * 
+	 * @param usuario Usuario a borrar.
+	 */
 	public static void delete(Usuario usuario) {
 		String delete = "DELETE FROM usuario WHERE id=" + usuario.getId().toString();
 		try {
@@ -191,6 +218,12 @@ public class UsuarioDAO {
 		}
 	}
 
+	/***
+	 * Obtiene un usuario por su id.
+	 * 
+	 * @param idUsuario Id del usuario.
+	 * @return Usuario encontrado.
+	 */
 	public static Usuario selectPorId(String idUsuario) {
 		Usuario usu = null;
 		String query = "SELECT * FROM usuario WHERE id=" + idUsuario;
@@ -229,6 +262,9 @@ public class UsuarioDAO {
 		return usu;
 	}
 
+	/***
+	 * Quita a todos los usuarios que aún no han sido validados.
+	 */
 	public static void limpiar() {
 		String delete = "DELETE FROM usuario WHERE validado=0";
 		try {

@@ -75,7 +75,6 @@ public class Login extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession(false);
 		LogSingleton log = LogSingleton.getInstance();
 
 		String correo = request.getParameter("correo");
@@ -90,7 +89,7 @@ public class Login extends HttpServlet {
 			}
 		} else {
 			if (usuario.isValidado()) {
-				session = request.getSession(true);
+				HttpSession session = request.getSession(true);
 				sesionesEJB.loginUsuario(session, usuario);
 
 				try {

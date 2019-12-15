@@ -10,10 +10,19 @@ import javax.servlet.http.HttpSession;
 
 import aplicacion.modelo.LogSingleton;
 
+/***
+ * Servlet para cerrar la sesión.
+ * 
+ * @author tofol
+ *
+ */
 @WebServlet("/Logout")
 public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	/***
+	 * Si hay una sesión abierta la cierra y redirige a la página principal.
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		LogSingleton log = LogSingleton.getInstance();

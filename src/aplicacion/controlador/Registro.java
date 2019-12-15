@@ -19,6 +19,12 @@ import aplicacion.modelo.ejb.UsuariosEJB;
 import aplicacion.modelo.pojo.Usuario;
 import aplicacion.vista.PaginaRegistro;
 
+/***
+ * Servlet para registrar usuarios.
+ * 
+ * @author tofol
+ *
+ */
 @WebServlet("/Registro")
 @MultipartConfig(maxFileSize = 1024 * 1024 * 5)
 public class Registro extends HttpServlet {
@@ -32,6 +38,10 @@ public class Registro extends HttpServlet {
 	@EJB
 	UsuariosEJB usuariosEJB;
 
+	/***
+	 * Si el usuario está logeado lo redirige a la págin principal, si no, muestra
+	 * la página de registro.
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession(false);
@@ -65,6 +75,10 @@ public class Registro extends HttpServlet {
 		}
 	}
 
+	/***
+	 * Si el usuario está logeado lo redirige a la página principal, si no, guarda
+	 * el usuario y su código de autenticación en la BBDD
+	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession(false);
@@ -73,6 +87,13 @@ public class Registro extends HttpServlet {
 		Usuario logeado = null;
 		if (session != null) {
 			logeado = sesionesEJB.usuarioLogeado(session);
+		}
+		if (logeado != null) {
+			try {
+				response.sendRedirect("Principal");
+			} catch (IOException e) {
+				log.getLoggerRegistro().error("Se ha producido un error en Post Registro: ", e);
+			}
 		}
 		String uploadPath = getServletContext().getRealPath("") + File.separator + UsuariosEJB.getUploadDirectory();
 		String nombre = request.getParameter("nombre");
@@ -93,39 +114,31 @@ public class Registro extends HttpServlet {
 				}
 			} else {
 				try {
-					if (!response.isCommitted())
-						response.sendRedirect("Registro?error=" + USUARIO_EXISTE);
+					response.sendRedirect("Registro?error=" + USUARIO_EXISTE);
 				} catch (IOException e) {
 					log.getLoggerRegistro().error("Se ha producido un error en Post Registro: ", e);
 				}
 			}
 		} else {
 			try {
-				if (!response.isCommitted())
-					response.sendRedirect("Registro?error=" + FALTAN_DATOS);
+				response.sendRedirect("Registro?error=" + FALTAN_DATOS);
 			} catch (IOException e) {
 				log.getLoggerRegistro().error("Se ha producido un error en Post Registro: ", e);
 			}
 		}
 
-		if (logeado != null) {
-			sesionesEJB.logoutUsuario(session);
-		}
-
 		if (correoEnviado) {
-			if (!response.isCommitted()) {
-				response.setContentType("text/html; charset=UTF-8");
-				PaginaRegistro paginaRegistro = new PaginaRegistro(null, true);
-				try {
-					paginaRegistro.print(response.getWriter());
-				} catch (IOException e) {
-					log.getLoggerRegistro().error("Se ha producido un error en Post Registro: ", e);
-				}
+			response.setContentType("text/html; charset=UTF-8");
+			PaginaRegistro paginaRegistro = new PaginaRegistro(null, true);
+			try {
+				paginaRegistro.print(response.getWriter());
+			} catch (IOException e) {
+				log.getLoggerRegistro().error("Se ha producido un error en Post Registro: ", e);
 			}
+
 		} else {
 			try {
-				if (!response.isCommitted())
-					response.sendRedirect("Registro?error=" + ERROR_CORREO);
+				response.sendRedirect("Registro?error=" + ERROR_CORREO);
 			} catch (IOException e) {
 				log.getLoggerRegistro().error("Se ha producido un error en Post Registro: ", e);
 			}

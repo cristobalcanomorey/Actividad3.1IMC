@@ -13,11 +13,22 @@ import aplicacion.modelo.LogSingleton;
 import aplicacion.modelo.ejb.UsuariosEJB;
 import aplicacion.modelo.pojo.Usuario;
 
+/***
+ * Gestiona los movimientos de la tabla altas_bajas en la BBDD
+ * 
+ * @author tofol
+ *
+ */
 public class AltasBajasDAO {
 
 	private static final Logger LOG = LogSingleton.getInstance().getLoggerAltasBajasDAO();
 	private static final JDBCSingleton CON = JDBCSingleton.getInstance();
 
+	/***
+	 * Registra la validación de un usuario.
+	 * 
+	 * @param usuario Usuario que se ha validado
+	 */
 	public static void registrarValidacion(Usuario usuario) {
 		String insert = "INSERT INTO altas_bajas (correo,nombre,tipoAccion,fecha) VALUES ('" + usuario.getCorreo()
 				+ "','" + usuario.getNombre() + "','V','" + UsuariosEJB.fechaAString(new Date()) + "')";
@@ -29,25 +40,30 @@ public class AltasBajasDAO {
 				CON.getStatement().executeUpdate(insert);
 			}
 		} catch (ClassNotFoundException | SQLException | NamingException e) {
-			LOG.error("ERROR USUARIO DAO: ", e);
+			LOG.error("ERROR ALTAS_BAJAS DAO: ", e);
 		} finally {
 			if (CON.getStatement() != null) {
 				try {
 					CON.getConnection().close();
 				} catch (SQLException e) {
-					LOG.error("ERROR USUARIO DAO: ", e);
+					LOG.error("ERROR ALTAS_BAJAS DAO: ", e);
 				}
 			}
 			if (CON.getConnection() != null) {
 				try {
 					CON.getConnection().close();
 				} catch (SQLException e) {
-					LOG.error("ERROR USUARIO DAO: ", e);
+					LOG.error("ERROR ALTAS_BAJAS DAO: ", e);
 				}
 			}
 		}
 	}
 
+	/***
+	 * Selecciona todos los datos.
+	 * 
+	 * @return Altas, bajas y validaciones de los usuarios.
+	 */
 	public static ResultSet getAltasBajas() {
 		String query = "SELECT * FROM altas_bajas";
 		ResultSet rs = null;
@@ -64,26 +80,29 @@ public class AltasBajasDAO {
 				rs.close();
 			}
 		} catch (ClassNotFoundException | SQLException | NamingException e) {
-			LOG.error("ERROR CALCULO DAO: ", e);
+			LOG.error("ERROR ALTAS_BAJAS DAO: ", e);
 		} finally {
 			if (CON.getStatement() != null) {
 				try {
 					CON.getConnection().close();
 				} catch (SQLException e) {
-					LOG.error("ERROR CALCULO DAO: ", e);
+					LOG.error("ERROR ALTAS_BAJAS DAO: ", e);
 				}
 			}
 			if (CON.getConnection() != null) {
 				try {
 					CON.getConnection().close();
 				} catch (SQLException e) {
-					LOG.error("ERROR CALCULO DAO: ", e);
+					LOG.error("ERROR ALTAS_BAJAS DAO: ", e);
 				}
 			}
 		}
 		return rs;
 	}
 
+	/***
+	 * Elimina todos los datos de la tabla.
+	 */
 	public static void vaciar() {
 		String truncar = "TRUNCATE TABLE altas_bajas";
 		try {
@@ -93,20 +112,20 @@ public class AltasBajasDAO {
 				CON.getStatement().executeUpdate(truncar);
 			}
 		} catch (ClassNotFoundException | SQLException | NamingException e) {
-			LOG.error("ERROR USUARIO DAO: ", e);
+			LOG.error("ERROR ALTAS_BAJAS DAO: ", e);
 		} finally {
 			if (CON.getStatement() != null) {
 				try {
 					CON.getConnection().close();
 				} catch (SQLException e) {
-					LOG.error("ERROR USUARIO DAO: ", e);
+					LOG.error("ERROR ALTAS_BAJAS DAO: ", e);
 				}
 			}
 			if (CON.getConnection() != null) {
 				try {
 					CON.getConnection().close();
 				} catch (SQLException e) {
-					LOG.error("ERROR USUARIO DAO: ", e);
+					LOG.error("ERROR ALTAS_BAJAS DAO: ", e);
 				}
 			}
 		}
