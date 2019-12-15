@@ -15,6 +15,12 @@ import aplicacion.modelo.ejb.SesionesEJB;
 import aplicacion.modelo.pojo.Usuario;
 import aplicacion.vista.PaginaPrincipal;
 
+/***
+ * Servlet para mostrar el historial del usuario.
+ * 
+ * @author tofol
+ *
+ */
 @WebServlet("/Historial")
 public class Historial extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -25,12 +31,17 @@ public class Historial extends HttpServlet {
 	@EJB
 	CalculosEJB calculosEJB;
 
+	/***
+	 * Si el usuario está logeado le añade los calculos de BBDD y muestra la página
+	 * de historial, si no lo redirige a la página principal.
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession(false);
 		LogSingleton log = LogSingleton.getInstance();
 		Usuario usuario = sesionesEJB.usuarioLogeado(session);
 		if (usuario != null) {
+			// Le añade el historial de cálculos al usuario para mostrarlos.
 			usuario.setCalculos(calculosEJB.getHistorial(usuario));
 		} else {
 			try {
@@ -47,31 +58,4 @@ public class Historial extends HttpServlet {
 			log.getLoggerHistorial().error("Se ha producido un error en GET Historial: ", e);
 		}
 	}
-
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession(false);
-		LogSingleton log = LogSingleton.getInstance();
-
-		Usuario usuario = sesionesEJB.usuarioLogeado(session);
-		if (usuario != null) {
-			usuario.setCalculos(calculosEJB.getHistorial(usuario));
-		} else {
-			try {
-				response.sendRedirect("Principal");
-			} catch (IOException e) {
-				log.getLoggerHistorial().error("Se ha producido un error en POST Historial: ", e);
-			}
-		}
-
-		response.setContentType("text/html; charset=UTF-8");
-		PaginaPrincipal paginaPrincipal = new PaginaPrincipal(usuario, null, true);
-		try {
-			paginaPrincipal.print(response.getWriter());
-		} catch (IOException e) {
-			log.getLoggerHistorial().error("Se ha producido un error en POST Historial: ", e);
-		}
-
-	}
-
 }

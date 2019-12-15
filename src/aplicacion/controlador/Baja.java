@@ -16,6 +16,12 @@ import aplicacion.modelo.ejb.UsuariosEJB;
 import aplicacion.modelo.pojo.Usuario;
 import aplicacion.vista.PaginaBaja;
 
+/***
+ * Servlet para dar de baja a los usuarios
+ * 
+ * @author tofol
+ *
+ */
 @WebServlet("/Baja")
 public class Baja extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -26,6 +32,10 @@ public class Baja extends HttpServlet {
 	@EJB
 	SesionesEJB sesionesEJB;
 
+	/***
+	 * Si el usuario está logeado le responde con la página de advertencia, si no lo
+	 * redirige a la página principal.
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession(false);
@@ -49,6 +59,10 @@ public class Baja extends HttpServlet {
 		}
 	}
 
+	/***
+	 * Si el usuario está logeado cierra la sesión y da de baja al usuario, si no lo
+	 * redirige a la página principal.
+	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession(false);
@@ -56,6 +70,7 @@ public class Baja extends HttpServlet {
 
 		Usuario usuario = sesionesEJB.usuarioLogeado(session);
 		if (usuario != null) {
+			// Si tenía fóto de perfil se borra.
 			if (!usuario.getFoto().equals("default.png")) {
 				String uploadPath = getServletContext().getRealPath("") + File.separator
 						+ UsuariosEJB.getUploadDirectory();
