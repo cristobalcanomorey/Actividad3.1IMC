@@ -7,7 +7,7 @@ DROP USER IF EXISTS 'tofol'@'%';
 
 drop procedure if exists crear_usuario;
 
-#Procedure que intenta bajar el nivel de seguridad y crea el usuario
+#Procedure que intenta bajar el nivel de seguridad por si acaso y crea el usuario
 DELIMITER $$
 CREATE PROCEDURE crear_usuario()
 BEGIN
@@ -66,7 +66,7 @@ CREATE TRIGGER altas AFTER INSERT ON usuario
 FOR EACH ROW
 begin
 	INSERT INTO altas_bajas (correo,nombre,tipoAccion,fecha)
-    VALUES (new.correo, new.nombre, 'A', new.fechaRegistro);
+    VALUES (new.correo, new.nombre, 'A', NOW());
 end$$
 DELIMITER ;
 
@@ -76,7 +76,7 @@ CREATE TRIGGER bajas BEFORE DELETE ON usuario
 FOR EACH ROW
 begin
 	INSERT INTO altas_bajas (correo,nombre,tipoAccion,fecha)
-    VALUES (old.correo, old.nombre, 'B', old.fechaRegistro);
+    VALUES (old.correo, old.nombre, 'B', NOW());
 end$$
 DELIMITER ;
 
@@ -96,10 +96,10 @@ INSERT INTO usuario (correo,nombre,password,foto,validado,fechaRegistro)
 values ('pup@gmail.com','pup','passwordpup','rutafotopup',true,'2019-12-10');
 
 INSERT INTO validacion (codigo,idUsuario)
-values ('algkkjadkfajfajsdnrriusfksd',1);
+values ('algkkjadkfajfajsdnrri',1);
 
 INSERT INTO validacion (codigo,idUsuario)
-values ('pydfhrybcnweuqysaixjhfdsuhy',4);
+values ('pydfhrybcnweuqysaixjh',4);
 
 INSERT INTO calculo (estatura,peso,fecha,idUsuario)
 values (1.90,80.7,'2018-12-06 18:14:00',1);
