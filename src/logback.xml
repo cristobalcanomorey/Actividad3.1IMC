@@ -35,6 +35,14 @@
     <appender-ref ref="ERRORFILE" />
   </logger>
   
+  <logger name="aplicacion.controlador.Baja" level="ERROR" additivity="false">
+    <appender-ref ref="ERRORFILE" />
+  </logger>
+  
+  <logger name="aplicacion.modelo.TimerSingleton" level="ERROR" additivity="false">
+    <appender-ref ref="ERRORFILE" />
+  </logger>
+  
   <logger name="aplicacion.modelo.ejb.MailEJB" level="ERROR" additivity="false">
     <appender-ref ref="ERRORFILE" />
   </logger>
@@ -48,6 +56,10 @@
   </logger>
   
   <logger name="aplicacion.modelo.dao.ValidacionDAO" level="ERROR" additivity="false">
+    <appender-ref ref="ERRORFILE" />
+  </logger>
+  
+  <logger name="aplicacion.modelo.dao.AltasBajasDAO" level="ERROR" additivity="false">
     <appender-ref ref="ERRORFILE" />
   </logger>
   

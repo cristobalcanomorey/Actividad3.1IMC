@@ -162,4 +162,98 @@ public class UsuarioDAO {
 			}
 		}
 	}
+
+	public static void delete(Usuario usuario) {
+		String delete = "DELETE FROM usuario WHERE id=" + usuario.getId().toString();
+		try {
+			CON.setConnection("java:/comp/env", "jdbc/ActividadIMC");
+			if (CON.getConnection() != null) {
+				CON.setStatement();
+				CON.getStatement().executeUpdate(delete);
+			}
+		} catch (ClassNotFoundException | SQLException | NamingException e) {
+			LOG.error("ERROR USUARIO DAO: ", e);
+		} finally {
+			if (CON.getStatement() != null) {
+				try {
+					CON.getConnection().close();
+				} catch (SQLException e) {
+					LOG.error("ERROR USUARIO DAO: ", e);
+				}
+			}
+			if (CON.getConnection() != null) {
+				try {
+					CON.getConnection().close();
+				} catch (SQLException e) {
+					LOG.error("ERROR USUARIO DAO: ", e);
+				}
+			}
+		}
+	}
+
+	public static Usuario selectPorId(String idUsuario) {
+		Usuario usu = null;
+		String query = "SELECT * FROM usuario WHERE id=" + idUsuario;
+		try {
+			CON.setConnection("java:/comp/env", "jdbc/ActividadIMC");
+			if (CON.getConnection() != null) {
+				CON.setStatement();
+				ResultSet rs = CON.getStatement().executeQuery(query);
+				rs.last();
+				if (rs.getRow() > 0) {
+					rs.first();
+					usu = new Usuario(rs.getInt("id"), rs.getString("correo"), rs.getString("nombre"),
+							rs.getString("password"), rs.getString("foto"), rs.getBoolean("validado"),
+							rs.getDate("fechaRegistro"));
+				}
+				rs.close();
+			}
+		} catch (ClassNotFoundException | SQLException | NamingException e) {
+			LOG.error("ERROR USUARIO DAO: ", e);
+		} finally {
+			if (CON.getStatement() != null) {
+				try {
+					CON.getConnection().close();
+				} catch (SQLException e) {
+					LOG.error("ERROR USUARIO DAO: ", e);
+				}
+			}
+			if (CON.getConnection() != null) {
+				try {
+					CON.getConnection().close();
+				} catch (SQLException e) {
+					LOG.error("ERROR USUARIO DAO: ", e);
+				}
+			}
+		}
+		return usu;
+	}
+
+	public static void limpiar() {
+		String delete = "DELETE FROM usuario WHERE validado=0";
+		try {
+			CON.setConnection("java:/comp/env", "jdbc/ActividadIMC");
+			if (CON.getConnection() != null) {
+				CON.setStatement();
+				CON.getStatement().executeUpdate(delete);
+			}
+		} catch (ClassNotFoundException | SQLException | NamingException e) {
+			LOG.error("ERROR USUARIO DAO: ", e);
+		} finally {
+			if (CON.getStatement() != null) {
+				try {
+					CON.getConnection().close();
+				} catch (SQLException e) {
+					LOG.error("ERROR USUARIO DAO: ", e);
+				}
+			}
+			if (CON.getConnection() != null) {
+				try {
+					CON.getConnection().close();
+				} catch (SQLException e) {
+					LOG.error("ERROR USUARIO DAO: ", e);
+				}
+			}
+		}
+	}
 }

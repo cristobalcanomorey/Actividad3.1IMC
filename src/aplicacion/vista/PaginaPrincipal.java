@@ -2,6 +2,8 @@ package aplicacion.vista;
 
 import java.io.PrintWriter;
 
+import aplicacion.modelo.ejb.CalculosEJB;
+import aplicacion.modelo.ejb.UsuariosEJB;
 import aplicacion.modelo.pojo.Calculo;
 import aplicacion.modelo.pojo.Usuario;
 import aplicacion.vista.html.Cuerpo;
@@ -20,7 +22,7 @@ public class PaginaPrincipal {
 	public PaginaPrincipal(Usuario usu, String resul, boolean historial) {
 		this.pagina = new Html("Principal", "css/style.css", "js/script.js");
 		if (usu != null) {
-			this.header = new Header(usu.getNombre(), usu.getFoto());
+			this.header = new Header(usu.getNombre(), UsuariosEJB.getRutaFotoCompleta(usu));
 			this.header.addLogout();
 			this.header.addHistorial();
 			this.header.addDarseDeBaja();
@@ -31,18 +33,22 @@ public class PaginaPrincipal {
 		}
 		this.header.addAPagina(this.pagina);
 		Formulario form;
+		Tag resultado = null;
+		Tabla tabla = null;
+		if (resul != null) {
+			resultado = new Tag("p", resul, true, true);
+		}
 		if (historial) {
 			pagina.addABody(new Tag("h1", "Historial", true, true));
 			form = null;
+			tabla = crearTablaHistorial(usu);
+			if (tabla == null) {
+				resultado = new Tag("p", "No has realizado ningún calculo todavía", true, true);
+			}
 		} else {
 			pagina.addABody(new Tag("h1", "Calcular IMC", true, true));
 			form = crearFormCalc("POST", "Principal");
 		}
-		Tag resultado = null;
-		if (resul != null) {
-			resultado = new Tag("p", resul, true, true);
-		}
-		Tabla tabla = crearTablaHistorial(usu);
 
 		this.cuerpo = new Cuerpo(form, tabla, resultado);
 		this.cuerpo.addAPagina(this.pagina);
@@ -63,7 +69,7 @@ public class PaginaPrincipal {
 				for (Calculo c : u.getCalculos()) {
 					tabla.addAFila(new Tag(c.getEstatura().toString()), "td");
 					tabla.addAFila(new Tag(c.getPeso().toString()), "td");
-					tabla.addAFila(new Tag(c.getFecha().toString()), "td");
+					tabla.addAFila(new Tag(CalculosEJB.fechaAString(c.getFecha())), "td");
 					tabla.addAFila(new Tag(String.format("%.2f", c.getImc())), "td");
 					tabla.addFilaACuerpo();
 					tabla.resetFila();

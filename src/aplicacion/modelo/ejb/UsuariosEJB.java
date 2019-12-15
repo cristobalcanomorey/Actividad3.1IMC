@@ -25,6 +25,8 @@ public class UsuariosEJB {
 	@EJB
 	MailEJB mailEJB;
 
+	private static final String UPLOAD_DIRECTORY = "imgs" + File.separator + "users";
+
 	public Usuario existeUsuario(String correo, String paswd) {
 		return UsuarioDAO.existeUsuario(correo, paswd);
 	}
@@ -90,7 +92,7 @@ public class UsuariosEJB {
 		Mail correo = mailEJB.getMail("smtp.gmail.com", 587, "imcpractica@gmail.com", "contrasenyaimc");
 		Tag enlace = new Tag("a", "Haz clic aquí para validar tu cuenta.", true, true);
 		enlace.prepararAtributos();
-		enlace.addAtributo("href", "Validacion?codigo=" + codigo);
+		enlace.addAtributo("href", "http://localhost:8080/Actividad3.1IMC/Validacion?codigo=" + codigo);
 		return mailEJB.sendMail(nuevo.getCorreo(), "Validar tu cuenta en Actividad3.1IMC", enlace.toString(), correo);
 	}
 
@@ -122,8 +124,25 @@ public class UsuariosEJB {
 		if (idUsuario != null) {
 			UsuarioDAO.validarPorId(idUsuario);
 			ValidacionDAO.borrar(codigo);
-			return true;
+			AltasBajasEJB.registrarValidacion(idUsuario);
+			return false;
 		}
-		return false;
+		return true;
+	}
+
+	public static String getRutaFotoCompleta(Usuario usu) {
+		return UPLOAD_DIRECTORY + File.separator + usu.getFoto();
+	}
+
+	public static String getUploadDirectory() {
+		return UPLOAD_DIRECTORY;
+	}
+
+	public void bajar(Usuario usuario) {
+		UsuarioDAO.delete(usuario);
+	}
+
+	public void limpiar() {
+		UsuarioDAO.limpiar();
 	}
 }

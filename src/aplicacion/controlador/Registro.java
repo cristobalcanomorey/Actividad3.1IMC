@@ -23,7 +23,6 @@ import aplicacion.vista.PaginaRegistro;
 @MultipartConfig(maxFileSize = 1024 * 1024 * 5)
 public class Registro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String UPLOAD_DIRECTORY = "imgs" + File.separator + "users";
 	private static final String FALTAN_DATOS = "1";
 	private static final String USUARIO_EXISTE = "2";
 	private static final String ERROR_CORREO = "3";
@@ -75,7 +74,7 @@ public class Registro extends HttpServlet {
 		if (session != null) {
 			logeado = sesionesEJB.usuarioLogeado(session);
 		}
-		String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
+		String uploadPath = getServletContext().getRealPath("") + File.separator + UsuariosEJB.getUploadDirectory();
 		String nombre = request.getParameter("nombre");
 		String correo = request.getParameter("correo");
 		String paswd = request.getParameter("paswd");

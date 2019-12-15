@@ -35,7 +35,7 @@ public class Tabla {
 		this.fila = new ArrayList<Tag>();
 	}
 
-	public Html addAPagina(Html pagina) {
+	private Tag prepararTabla() {
 		thead.prepararHijos();
 		for (ArrayList<Tag> cab : encabezado) {
 			Tag tr = new Tag("tr", null, true, true);
@@ -58,7 +58,16 @@ public class Tabla {
 		tabla.prepararHijos();
 		tabla.addChild(thead);
 		tabla.addChild(tbody);
-		pagina.addABody(tabla);
+		return tabla;
+	}
+
+	@Override
+	public String toString() {
+		return prepararTabla().toString();
+	}
+
+	public Html addAPagina(Html pagina) {
+		pagina.addABody(prepararTabla());
 		return pagina;
 	}
 }

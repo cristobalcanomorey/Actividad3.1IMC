@@ -26,6 +26,7 @@ public class Validacion extends HttpServlet {
 			LogSingleton log = LogSingleton.getInstance();
 			boolean caducado = usuariosEJB.validar(codigo);
 			if (caducado) {
+				response.setContentType("text/html; charset=UTF-8");
 				PaginaValidacion paginaValidacion = new PaginaValidacion();
 				try {
 					paginaValidacion.print(response.getWriter());

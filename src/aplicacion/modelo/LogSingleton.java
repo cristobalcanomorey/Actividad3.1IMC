@@ -3,12 +3,14 @@ package aplicacion.modelo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import aplicacion.controlador.Baja;
 import aplicacion.controlador.Historial;
 import aplicacion.controlador.Login;
 import aplicacion.controlador.Logout;
 import aplicacion.controlador.Principal;
 import aplicacion.controlador.Registro;
 import aplicacion.controlador.Validacion;
+import aplicacion.modelo.dao.AltasBajasDAO;
 import aplicacion.modelo.dao.CalculoDAO;
 import aplicacion.modelo.dao.UsuarioDAO;
 import aplicacion.modelo.dao.ValidacionDAO;
@@ -26,6 +28,9 @@ public class LogSingleton {
 	private Logger loggerMailEJB = LoggerFactory.getLogger(MailEJB.class);
 	private Logger loggerValidacionDAO = LoggerFactory.getLogger(ValidacionDAO.class);
 	private Logger loggerValidacion = LoggerFactory.getLogger(Validacion.class);
+	private Logger loggerBaja = LoggerFactory.getLogger(Baja.class);
+	private Logger loggerAltasBajasDAO = LoggerFactory.getLogger(AltasBajasDAO.class);
+	private Logger loggerTimerSingleton = LoggerFactory.getLogger(TimerSingleton.class);
 
 	/**
 	 * Constructor privado
@@ -130,6 +135,33 @@ public class LogSingleton {
 	 */
 	public Logger getLoggerValidacion() {
 		return loggerValidacion;
+	}
+
+	/***
+	 * Obtener el logger para Baja
+	 * 
+	 * @return Logger
+	 */
+	public Logger getLoggerBaja() {
+		return loggerBaja;
+	}
+
+	/***
+	 * Obtener el logger para AltasBajasDAO
+	 * 
+	 * @return Logger
+	 */
+	public Logger getLoggerAltasBajasDAO() {
+		return loggerAltasBajasDAO;
+	}
+
+	/***
+	 * Obtener el logger para TimerSingleton
+	 * 
+	 * @return Logger
+	 */
+	public Logger getLoggerTimerSingleton() {
+		return loggerTimerSingleton;
 	}
 
 }

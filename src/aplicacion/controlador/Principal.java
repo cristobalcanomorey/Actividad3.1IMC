@@ -60,7 +60,7 @@ public class Principal extends HttpServlet {
 		if (peso != null && altura != null) {
 			p = Float.parseFloat(peso);
 			a = Float.parseFloat(altura);
-			Calculo calculo = new Calculo(null, p, a, new Date());
+			Calculo calculo = new Calculo(null, a, p, new Date());
 			calculo.setImc(CalculosEJB.calcula(p, a));
 			imc = String.format("%.2f", calculo.getImc());
 			if (usuario != null) {

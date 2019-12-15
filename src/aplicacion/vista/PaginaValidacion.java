@@ -19,7 +19,7 @@ public class PaginaValidacion {
 		this.pagina = new Html("Validacion", "css/style.css", "js/script.js");
 		this.header = new Header(null, null);
 		this.header.addAPagina(this.pagina);
-		Tag error = new Tag("h2", "Tu cuenta ha caducado.", true, true);
+		Tag error = new Tag("h2", "Tu cuenta ha caducado o ya ha sido validada.", true, true);
 		Tag volver = new Tag("a", "Volver a la página principal", true, true);
 		volver.prepararAtributos();
 		volver.addAtributo("href", "Principal");
