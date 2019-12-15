@@ -46,4 +46,12 @@
   <logger name="aplicacion.modelo.dao.CalculoDAO" level="ERROR" additivity="false">
     <appender-ref ref="ERRORFILE" />
   </logger>
+  
+  <logger name="aplicacion.modelo.dao.ValidacionDAO" level="ERROR" additivity="false">
+    <appender-ref ref="ERRORFILE" />
+  </logger>
+  
+  <logger name="aplicacion.controlador.Validacion" level="ERROR" additivity="false">
+    <appender-ref ref="ERRORFILE" />
+  </logger>
 </configuration>

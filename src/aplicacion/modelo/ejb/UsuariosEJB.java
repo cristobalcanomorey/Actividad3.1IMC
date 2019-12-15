@@ -117,9 +117,13 @@ public class UsuariosEJB {
 		return sdf.format(fecha);
 	}
 
-	public void validar(String codigo) {
+	public boolean validar(String codigo) {
 		String idUsuario = ValidacionDAO.selectIdUsuario(codigo);
-		UsuarioDAO.validarPorId(idUsuario);
-		ValidacionDAO.borrar(codigo);
+		if (idUsuario != null) {
+			UsuarioDAO.validarPorId(idUsuario);
+			ValidacionDAO.borrar(codigo);
+			return true;
+		}
+		return false;
 	}
 }

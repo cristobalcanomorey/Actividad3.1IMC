@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import aplicacion.modelo.LogSingleton;
 import aplicacion.modelo.ejb.UsuariosEJB;
+import aplicacion.vista.PaginaValidacion;
 
 @WebServlet("/Validacion")
 public class Validacion extends HttpServlet {
@@ -23,11 +24,20 @@ public class Validacion extends HttpServlet {
 		String codigo = request.getParameter("codigo");
 		if (codigo != null) {
 			LogSingleton log = LogSingleton.getInstance();
-			usuariosEJB.validar(codigo);
-			try {
-				response.sendRedirect("Principal");
-			} catch (IOException e) {
-				log.getLoggerRegistro().error("Se ha producido un error en Get Validacion: ", e);
+			boolean caducado = usuariosEJB.validar(codigo);
+			if (caducado) {
+				PaginaValidacion paginaValidacion = new PaginaValidacion();
+				try {
+					paginaValidacion.print(response.getWriter());
+				} catch (IOException e) {
+					log.getLoggerValidacion().error("Se ha producido un error en Get Validacion: ", e);
+				}
+			} else {
+				try {
+					response.sendRedirect("Principal");
+				} catch (IOException e) {
+					log.getLoggerValidacion().error("Se ha producido un error en Get Validacion: ", e);
+				}
 			}
 		}
 	}
