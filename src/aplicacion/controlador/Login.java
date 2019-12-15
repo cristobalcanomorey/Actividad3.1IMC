@@ -15,6 +15,12 @@ import aplicacion.modelo.ejb.UsuariosEJB;
 import aplicacion.modelo.pojo.Usuario;
 import aplicacion.vista.PaginaLogin;
 
+/***
+ * Servlet para iniciar sesión.
+ * 
+ * @author tofol
+ *
+ */
 @WebServlet("/Login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -25,6 +31,10 @@ public class Login extends HttpServlet {
 	@EJB
 	SesionesEJB sesionesEJB;
 
+	/***
+	 * Si el usuario está logeado lo redirige a la página principal, si no le
+	 * muestra la página de login
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession(false);
@@ -59,6 +69,10 @@ public class Login extends HttpServlet {
 		}
 	}
 
+	/***
+	 * Inicia la sesión del usuario, lo redirige a Login para mostrar error o lo
+	 * redirige a la página principal
+	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession(false);
@@ -67,40 +81,28 @@ public class Login extends HttpServlet {
 		String correo = request.getParameter("correo");
 		String paswd = request.getParameter("paswd");
 
-		if (session != null) {
-			Usuario usuario = usuariosEJB.existeUsuario(correo, paswd);
-			if (usuario == null) {
-				sesionesEJB.logoutUsuario(session);
-			}
+		Usuario usuario = usuariosEJB.existeUsuario(correo, paswd);
+		if (usuario == null) {
 			try {
-				response.sendRedirect("Principal");
+				response.sendRedirect("Login?error=1");
 			} catch (IOException e) {
 				log.getLoggerLogin().error("Se ha producido un error en POST Login: ", e);
 			}
 		} else {
-			Usuario usuario = usuariosEJB.existeUsuario(correo, paswd);
-			if (usuario == null) {
+			if (usuario.isValidado()) {
+				session = request.getSession(true);
+				sesionesEJB.loginUsuario(session, usuario);
+
 				try {
-					response.sendRedirect("Login?error=1");
+					response.sendRedirect("Principal");
 				} catch (IOException e) {
 					log.getLoggerLogin().error("Se ha producido un error en POST Login: ", e);
 				}
 			} else {
-				if (usuario.isValidado()) {
-					session = request.getSession(true);
-					sesionesEJB.loginUsuario(session, usuario);
-
-					try {
-						response.sendRedirect("Principal");
-					} catch (IOException e) {
-						log.getLoggerLogin().error("Se ha producido un error en POST Login: ", e);
-					}
-				} else {
-					try {
-						response.sendRedirect("Login?error=2");
-					} catch (IOException e) {
-						log.getLoggerLogin().error("Se ha producido un error en POST Login: ", e);
-					}
+				try {
+					response.sendRedirect("Login?error=2");
+				} catch (IOException e) {
+					log.getLoggerLogin().error("Se ha producido un error en POST Login: ", e);
 				}
 			}
 		}
