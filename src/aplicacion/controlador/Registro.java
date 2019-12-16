@@ -141,9 +141,6 @@ public class Registro extends HttpServlet {
 			}
 
 		} else {
-			// Si el usuario no recibe el correo se borra de la BBDD
-			Usuario error = usuariosEJB.existeUsuario(nuevo.getCorreo(), nuevo.getPassword());
-			usuariosEJB.bajar(error);
 			try {
 				if (!response.isCommitted())
 					response.sendRedirect("Registro?error=" + ERROR_CORREO);

@@ -26,9 +26,9 @@ public class TimerSingleton {
 	@EJB
 	AltasBajasEJB altasBajasEJB;
 
-	private final String CORREO_JEFE = "tofolcanodaw2@gmail.com";
+	private final String CORREO_JEFE = "tribot@gmail.com";
 
-	@Schedule(hour = "0", minute = "*/5", second = "0", persistent = false)
+	@Schedule(hour = "0", minute = "*/1", second = "0", persistent = false)
 	public void corre() {
 		LogSingleton log = LogSingleton.getInstance();
 		usuariosEJB.limpiar();

@@ -31,9 +31,8 @@ public class MailEJB {
 		prop.put("mail.smtp.auth", "true");
 		prop.put("mail.smtp.starttls.enable", "true");
 		prop.put("mail.smtp.host", correo.getHost());
-		prop.put("mail.smtp.port", correo.getPort());
+		prop.put("mail.smtp.port", String.valueOf(correo.getPort()));
 		prop.put("mail.smtp.ssl.trust", correo.getHost());
-		prop.put("mail.smtp.timeout", 1000);
 
 		Session session = Session.getInstance(prop, new Authenticator() {
 			@Override

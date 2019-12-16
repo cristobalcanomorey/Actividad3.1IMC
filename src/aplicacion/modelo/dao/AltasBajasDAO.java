@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 
 import aplicacion.modelo.JDBCSingleton;
 import aplicacion.modelo.LogSingleton;
-import aplicacion.modelo.ejb.UsuariosEJB;
+import aplicacion.modelo.ejb.CalculosEJB;
 import aplicacion.modelo.pojo.Usuario;
 
 /***
@@ -31,7 +31,7 @@ public class AltasBajasDAO {
 	 */
 	public static void registrarValidacion(Usuario usuario) {
 		String insert = "INSERT INTO altas_bajas (correo,nombre,tipoAccion,fecha) VALUES ('" + usuario.getCorreo()
-				+ "','" + usuario.getNombre() + "','V','" + UsuariosEJB.fechaAString(new Date()) + "')";
+				+ "','" + usuario.getNombre() + "','V','" + CalculosEJB.fechaAString(new Date()) + "')";
 
 		try {
 			CON.setConnection("java:/comp/env", "jdbc/ActividadIMC");
