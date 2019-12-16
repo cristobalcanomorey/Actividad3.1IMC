@@ -5,19 +5,7 @@ use ActividadIMC;
 DROP USER IF EXISTS 'tofol'@'localhost';
 DROP USER IF EXISTS 'tofol'@'%';
 
-drop procedure if exists crear_usuario;
-
-#Procedure que intenta bajar el nivel de seguridad por si acaso y crea el usuario
-DELIMITER $$
-CREATE PROCEDURE crear_usuario()
-BEGIN
-	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
-		SET GLOBAL validate_password_policy = 0;
-	CREATE USER IF NOT EXISTS 'tofol'@'%' IDENTIFIED BY 'password';
-END$$
-DELIMITER ;
-
-CALL crear_usuario();
+CREATE USER IF NOT EXISTS 'tofol'@'%' IDENTIFIED BY 'password';
 
 GRANT ALL PRIVILEGES ON ActividadIMC.* TO 'tofol'@'%' WITH GRANT OPTION;
 
@@ -81,19 +69,19 @@ end$$
 DELIMITER ;
 
 INSERT INTO usuario (correo,nombre,password,foto,validado,fechaRegistro)
-values ('tofol@gmail.com','tofol','passwordtofol','rutafototofol',false,'2019-12-06');
+values ('tofol@gmail.com','tofol','passwordtofol','default.png',false,'2019-12-06');
 
 INSERT INTO usuario (correo,nombre,password,foto,validado,fechaRegistro)
-values ('pep@gmail.com','pep','passwordpep','rutafotopep',true,'2019-12-07');
+values ('pep@gmail.com','pep','passwordpep','default.png',true,'2019-12-07');
 
 INSERT INTO usuario (correo,nombre,password,foto,validado,fechaRegistro)
-values ('pip@gmail.com','pip','passwordpip','rutafotopip',true,'2019-12-08');
+values ('pip@gmail.com','pip','passwordpip','default.png',true,'2019-12-08');
 
 INSERT INTO usuario (correo,nombre,password,foto,validado,fechaRegistro)
-values ('pop@gmail.com','pop','passwordpop','rutafotopop',false,'2019-12-09');
+values ('pop@gmail.com','pop','passwordpop','default.png',false,'2019-12-09');
 
 INSERT INTO usuario (correo,nombre,password,foto,validado,fechaRegistro)
-values ('pup@gmail.com','pup','passwordpup','rutafotopup',true,'2019-12-10');
+values ('pup@gmail.com','pup','passwordpup','default.png',true,'2019-12-10');
 
 INSERT INTO validacion (codigo,idUsuario)
 values ('algkkjadkfajfajsdnrri',1);
