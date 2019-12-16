@@ -26,7 +26,7 @@ public class TimerSingleton {
 	@EJB
 	AltasBajasEJB altasBajasEJB;
 
-	private final String CORREO_JEFE = "tribot@gmail.com";
+	private final String CORREO_JEFE = "tofolcanodaw2@gmail.com";
 
 	@Schedule(hour = "0", minute = "*/5", second = "0", persistent = false)
 	public void corre() {

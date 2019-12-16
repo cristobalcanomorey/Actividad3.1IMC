@@ -90,7 +90,8 @@ public class Registro extends HttpServlet {
 		}
 		if (logeado != null) {
 			try {
-				response.sendRedirect("Principal");
+				if (!response.isCommitted())
+					response.sendRedirect("Principal");
 			} catch (IOException e) {
 				log.getLoggerRegistro().error("Se ha producido un error en Post Registro: ", e);
 			}
@@ -101,27 +102,30 @@ public class Registro extends HttpServlet {
 		String paswd = request.getParameter("paswd");
 		String fPerfil = null;
 		boolean correoEnviado = false;
+		Usuario nuevo = null;
 
 		if (nombre != null & correo != null & paswd != null) {
 			if (!usuariosEJB.existeUsuario(correo)) {
 				try {
 					String rutaPerfil = correo.replace("@", "_").replace(".", "_");
 					fPerfil = usuariosEJB.crearFotoDePerfil(uploadPath, request.getParts(), rutaPerfil);
-					Usuario nuevo = new Usuario(correo, nombre, paswd, fPerfil, false, new Date());
+					nuevo = new Usuario(correo, nombre, paswd, fPerfil, false, new Date());
 					correoEnviado = usuariosEJB.registrarUsuario(nuevo);
 				} catch (IOException | ServletException e) {
 					log.getLoggerRegistro().error("Se ha producido un error en Post Registro: ", e);
 				}
 			} else {
 				try {
-					response.sendRedirect("Registro?error=" + USUARIO_EXISTE);
+					if (!response.isCommitted())
+						response.sendRedirect("Registro?error=" + USUARIO_EXISTE);
 				} catch (IOException e) {
 					log.getLoggerRegistro().error("Se ha producido un error en Post Registro: ", e);
 				}
 			}
 		} else {
 			try {
-				response.sendRedirect("Registro?error=" + FALTAN_DATOS);
+				if (!response.isCommitted())
+					response.sendRedirect("Registro?error=" + FALTAN_DATOS);
 			} catch (IOException e) {
 				log.getLoggerRegistro().error("Se ha producido un error en Post Registro: ", e);
 			}
@@ -137,8 +141,12 @@ public class Registro extends HttpServlet {
 			}
 
 		} else {
+			// Si el usuario no recibe el correo se borra de la BBDD
+			Usuario error = usuariosEJB.existeUsuario(nuevo.getCorreo(), nuevo.getPassword());
+			usuariosEJB.bajar(error);
 			try {
-				response.sendRedirect("Registro?error=" + ERROR_CORREO);
+				if (!response.isCommitted())
+					response.sendRedirect("Registro?error=" + ERROR_CORREO);
 			} catch (IOException e) {
 				log.getLoggerRegistro().error("Se ha producido un error en Post Registro: ", e);
 			}
