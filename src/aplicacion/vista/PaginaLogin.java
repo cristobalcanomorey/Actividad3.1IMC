@@ -14,6 +14,11 @@ public class PaginaLogin {
 	private Header header;
 	private Cuerpo cuerpo;
 
+	/***
+	 * Crea la página de login
+	 * 
+	 * @param error Error del usuario
+	 */
 	public PaginaLogin(String error) {
 		this.pagina = new Html("Login", "css/style.css", "js/script.js");
 		this.header = new Header(null, null);
@@ -27,6 +32,11 @@ public class PaginaLogin {
 		}
 	}
 
+	/***
+	 * Crea el formulario para iniciar sesión
+	 * 
+	 * @return
+	 */
 	private Formulario crearFormLogin() {
 		Formulario form = new Formulario("POST", "Login");
 

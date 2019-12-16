@@ -11,6 +11,14 @@ public class Cuerpo {
 	private Tabla historial = null;
 	private Tag resultado = null;
 
+	/***
+	 * Establece el cuerpo de la página, que es todo lo que hay bajo la barra de
+	 * navegación
+	 * 
+	 * @param formulario
+	 * @param tabla
+	 * @param resultado
+	 */
 	public Cuerpo(Formulario formulario, Tabla tabla, Tag resultado) {
 		if (formulario != null) {
 			this.formulario = formulario;

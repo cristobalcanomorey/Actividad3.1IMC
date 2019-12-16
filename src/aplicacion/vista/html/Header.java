@@ -14,6 +14,13 @@ public class Header {
 	private Tag registro = null;
 	private Tag historial = null;
 
+	/***
+	 * Establece la cabecera de la página, que es el logo, la barra de navegación y
+	 * los datos del usuario
+	 * 
+	 * @param nombreUsuario
+	 * @param rutaFotoPerfil
+	 */
 	public Header(String nombreUsuario, String rutaFotoPerfil) {
 		if (nombreUsuario != null) {
 			this.usuario = new Tag(nombreUsuario);
@@ -62,6 +69,12 @@ public class Header {
 		this.historial.addAtributo("href", "Historial");
 	}
 
+	/***
+	 * Añade la cabecera a la página
+	 * 
+	 * @param pagina
+	 * @return Página Html con la cabecera
+	 */
 	public Html addAPagina(Html pagina) {
 		Tag navBar = new Tag("ul", null, true, true);
 		navBar.prepararAtributos();

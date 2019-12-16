@@ -26,6 +26,15 @@ public class MailEJB {
 
 	private static final Logger LOG = LogSingleton.getInstance().getLoggerMailEJB();
 
+	/***
+	 * Envia un email
+	 * 
+	 * @param para    Destinatario
+	 * @param asunto
+	 * @param mensaje
+	 * @param correo  Remitente
+	 * @return True si se ha mandado el correo, False si no.
+	 */
 	public boolean sendMail(String para, String asunto, String mensaje, Mail correo) {
 		Properties prop = new Properties();
 		prop.put("mail.smtp.auth", "true");
@@ -63,6 +72,15 @@ public class MailEJB {
 		}
 	}
 
+	/***
+	 * Obtiene un objeto Mail
+	 * 
+	 * @param host
+	 * @param puerto
+	 * @param remitente
+	 * @param password
+	 * @return
+	 */
 	public Mail getMail(String host, int puerto, String remitente, String password) {
 		return new Mail(host, puerto, remitente, password);
 	}

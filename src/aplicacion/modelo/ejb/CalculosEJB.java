@@ -17,10 +17,23 @@ import aplicacion.modelo.pojo.Usuario;
 @LocalBean
 public class CalculosEJB {
 
+	/***
+	 * Realiza el calculo IMC
+	 * 
+	 * @param peso
+	 * @param altura
+	 * @return Resultado del cálculo
+	 */
 	public static Float calcula(Float peso, Float altura) {
 		return peso / (altura * altura);
 	}
 
+	/***
+	 * Obtiene todos los cálculos de un usuario
+	 * 
+	 * @param usuario Usuario en cuestión
+	 * @return ArrayList con sus cálculos
+	 */
 	public ArrayList<Calculo> getHistorial(Usuario usuario) {
 		ArrayList<Calculo> calculos = CalculoDAO.getHistorial(usuario);
 		if (calculos != null) {
@@ -31,6 +44,13 @@ public class CalculosEJB {
 		return calculos;
 	}
 
+	/***
+	 * Convierte de ResultSet a ArrayList con calculos
+	 * 
+	 * @param rs ResultSet a convertir
+	 * @return ArrayList con calculos
+	 * @throws SQLException Error de la BBDD
+	 */
 	public static ArrayList<Calculo> rsAArrayList(ResultSet rs) throws SQLException {
 		ArrayList<Calculo> calcs = new ArrayList<Calculo>();
 		while (rs.next()) {

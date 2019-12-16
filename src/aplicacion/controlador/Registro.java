@@ -107,6 +107,7 @@ public class Registro extends HttpServlet {
 		if (nombre != null & correo != null & paswd != null) {
 			if (!usuariosEJB.existeUsuario(correo)) {
 				try {
+					// Establece el correo sin @ y sin puntos como el nombre de su foto de perfil
 					String rutaPerfil = correo.replace("@", "_").replace(".", "_");
 					fPerfil = usuariosEJB.crearFotoDePerfil(uploadPath, request.getParts(), rutaPerfil);
 					nuevo = new Usuario(correo, nombre, paswd, fPerfil, false, new Date());

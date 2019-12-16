@@ -13,6 +13,14 @@ public class Tag {
 	private boolean nodoTexto = false;
 	private String contenido;
 
+	/***
+	 * Constructor para las etiquetas HTML
+	 * 
+	 * @param tag
+	 * @param contenido
+	 * @param cierraEtiqueta El tag acaba en />
+	 * @param etiquetaCierre El tag acaba en </nombreTag>
+	 */
 	public Tag(String tag, String contenido, boolean cierraEtiqueta, boolean etiquetaCierre) {
 		this.tag = tag;
 		if (contenido != null) {
@@ -35,10 +43,19 @@ public class Tag {
 		this.nodoTexto = true;
 	}
 
+	/***
+	 * Inicializa atributos
+	 */
 	public void prepararAtributos() {
 		this.atributos = new HashMap<String, String>();
 	}
 
+	/***
+	 * Añade un atributo
+	 * 
+	 * @param atributo
+	 * @param valor
+	 */
 	public void addAtributo(String atributo, String valor) {
 		if (this.atributos != null) {
 			if (valor != null) {
@@ -49,16 +66,29 @@ public class Tag {
 		}
 	}
 
+	/***
+	 * Inicializa hijos
+	 */
 	public void prepararHijos() {
 		this.hijos = new ArrayList<Tag>();
 	}
 
+	/***
+	 * Añade un Tag hijo
+	 * 
+	 * @param hijo
+	 */
 	public void addChild(Tag hijo) {
 		if (this.hijos != null) {
 			this.hijos.add(hijo);
 		}
 	}
 
+	/***
+	 * Añade texto al contenido
+	 * 
+	 * @param texto
+	 */
 	public void addContenido(String texto) {
 		this.contenido += texto;
 	}
@@ -76,6 +106,9 @@ public class Tag {
 		return t;
 	}
 
+	/***
+	 * Convierte el Tag a un string
+	 */
 	@Override
 	public String toString() {
 		if (nodoTexto) {

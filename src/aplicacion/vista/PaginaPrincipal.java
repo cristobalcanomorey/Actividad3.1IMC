@@ -19,6 +19,13 @@ public class PaginaPrincipal {
 	private Header header;
 	private Cuerpo cuerpo;
 
+	/***
+	 * Crea la página principal
+	 * 
+	 * @param usu       Usuario logeado
+	 * @param resul     Resultado del cálculo
+	 * @param historial True si se tiene que mostrar el historial del usuario
+	 */
 	public PaginaPrincipal(Usuario usu, String resul, boolean historial) {
 		this.pagina = new Html("Principal", "css/style.css", "js/script.js");
 		if (usu != null) {
@@ -79,6 +86,13 @@ public class PaginaPrincipal {
 		return tabla;
 	}
 
+	/***
+	 * Crea el formulario de cálculo
+	 * 
+	 * @param metodo
+	 * @param sitio
+	 * @return
+	 */
 	private Formulario crearFormCalc(String metodo, String sitio) {
 		Formulario form = new Formulario(metodo, sitio);
 		form.addItem(new Tag("p", "Peso", true, true));

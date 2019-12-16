@@ -12,6 +12,11 @@ public class MensajeAltasBajas {
 	private Tag mensaje = null;
 	private Tabla tabla = null;
 
+	/***
+	 * Constructor para el mensaje de altas y bajas
+	 * 
+	 * @param altasBajas
+	 */
 	public MensajeAltasBajas(ArrayList<AltaBaja> altasBajas) {
 		crearTablaMensaje(altasBajas);
 		if (tabla != null) {
@@ -21,6 +26,11 @@ public class MensajeAltasBajas {
 		}
 	}
 
+	/***
+	 * Crea la tabla con las altas y las bajas
+	 * 
+	 * @param altasBajas las altas y las bajas
+	 */
 	private void crearTablaMensaje(ArrayList<AltaBaja> altasBajas) {
 		if (altasBajas != null) {
 			tabla = new Tabla();

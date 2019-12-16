@@ -13,6 +13,9 @@ public class PaginaBaja {
 	private Header header;
 	private Cuerpo cuerpo;
 
+	/***
+	 * Crea la página para darse de baja
+	 */
 	public PaginaBaja() {
 		this.pagina = new Html("Login", "css/style.css", "js/script.js");
 		this.header = new Header(null, null);
@@ -24,6 +27,11 @@ public class PaginaBaja {
 		this.cuerpo.addAPagina(this.pagina);
 	}
 
+	/***
+	 * Crea el formulario para darse de baja
+	 * 
+	 * @return
+	 */
 	private Formulario crearFormBaja() {
 		Formulario form = new Formulario("POST", "Baja");
 

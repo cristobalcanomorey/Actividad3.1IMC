@@ -27,14 +27,36 @@ public class UsuariosEJB {
 
 	private static final String UPLOAD_DIRECTORY = "imgs" + File.separator + "users";
 
+	/***
+	 * Comprueba si existe un usuario con ese correo y esa contraseña
+	 * 
+	 * @param correo
+	 * @param paswd
+	 * @return Usuario con esos datos.
+	 */
 	public Usuario existeUsuario(String correo, String paswd) {
 		return UsuarioDAO.existeUsuario(correo, paswd);
 	}
 
+	/***
+	 * Comprueba si existe un usuario con ese correo
+	 * 
+	 * @param correo
+	 * @return True si existe, False si no.
+	 */
 	public boolean existeUsuario(String correo) {
 		return UsuarioDAO.existeUsuario(correo);
 	}
 
+	/***
+	 * Crea la foto de perfil del usuario
+	 * 
+	 * @param carpeta
+	 * @param partes
+	 * @param usuario
+	 * @return Ruta de la foto
+	 * @throws IOException
+	 */
 	public String crearFotoDePerfil(String carpeta, Collection<Part> partes, String usuario) throws IOException {
 		// Si la ruta no existe la crearemos
 		File uploadDir = new File(carpeta);
@@ -80,6 +102,12 @@ public class UsuariosEJB {
 		return resul;
 	}
 
+	/***
+	 * Registra un usuario y le manda un correo de validación.
+	 * 
+	 * @param nuevo
+	 * @return True si se ha mandado el correo, False si no
+	 */
 	public boolean registrarUsuario(Usuario nuevo) {
 		String codigo = codigoAleatorio();
 		UsuarioDAO.insertUsuario(nuevo);
@@ -88,6 +116,13 @@ public class UsuariosEJB {
 		return enviarCorreo(usu, codigo);
 	}
 
+	/***
+	 * Envia el correo de validación
+	 * 
+	 * @param nuevo  Usuario al que se le manda
+	 * @param codigo Codigo de validación
+	 * @return True si se ha mandado, false si no
+	 */
 	private boolean enviarCorreo(Usuario nuevo, String codigo) {
 		Mail correo = mailEJB.getMail("smtp.gmail.com", 587, "imcpractica@gmail.com", "contrasenyaimc");
 		Tag enlace = new Tag("a", "Haz clic aquí para validar tu cuenta.", true, true);
@@ -119,6 +154,13 @@ public class UsuariosEJB {
 		return sdf.format(fecha);
 	}
 
+	/***
+	 * Si existe el código en la BBDD valida su usuario, borra el código y añade una
+	 * transacción en la tabla altas_bajas
+	 * 
+	 * @param codigo
+	 * @return true si no existe, false si si.
+	 */
 	public boolean validar(String codigo) {
 		String idUsuario = ValidacionDAO.selectIdUsuario(codigo);
 		if (idUsuario != null) {
@@ -138,10 +180,18 @@ public class UsuariosEJB {
 		return UPLOAD_DIRECTORY;
 	}
 
+	/***
+	 * Da de baja a un usuario
+	 * 
+	 * @param usuario
+	 */
 	public void bajar(Usuario usuario) {
 		UsuarioDAO.delete(usuario);
 	}
 
+	/***
+	 * Borra a todos los usuarios que todavía no han sido validados.
+	 */
 	public void limpiar() {
 		UsuarioDAO.limpiar();
 	}
